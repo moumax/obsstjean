@@ -5,6 +5,7 @@ import Observatoire from "@components/observatoire/observatoire";
 import About from "@components/about/about";
 import "./App.css";
 import Footer from "@components/footer/footer";
+import Contact from "@components/contact/contact";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <EnterPoint />
         <Observatoire />
         <About />
+        <Contact />
         <Footer />
       </div>
     </main>
