@@ -1,13 +1,25 @@
-// eslint-disable-next-line import/no-unresolved
-import Observatoire from "@components/observatoire.jsx";
+/* eslint-disable import/no-unresolved */
+
+import EnterPoint from "@components/enter_point/enter_point";
+import Observatoire from "@components/observatoire/observatoire";
+import About from "@components/about/about";
 import "./App.css";
+import Footer from "@components/footer/footer";
+import Contact from "@components/contact/contact";
+import Events from "@components/events/events";
 
 function App() {
   return (
-    <div className="App">
-      <p>Point d'entrée de l'appli</p>
-      <Observatoire />
-    </div>
+    <main className="w-full h-full bg-[#072449] overflow-hidden">
+      <div className="flex flex-col items-center">
+        <EnterPoint />
+        <Observatoire />
+        <About />
+        <Events />
+        <Contact />
+        <Footer />
+      </div>
+    </main>
   );
 }
 
