@@ -10,7 +10,7 @@ const getAllEvents = async (req, res) => {
       res.status(204).json({
         Message: "La liste des events est vide",
       });
-    } else res.json({ "Liste des events :": { events } });
+    } else res.json({ events });
   } catch (e) {
     console.error(e);
     res.status(500).json({
