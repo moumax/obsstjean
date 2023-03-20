@@ -2,12 +2,16 @@ const express = require("express");
 
 const router = express.Router();
 
-const itemControllers = require("./controllers/itemControllers");
+const EventsController = require("./controllers/eventsController");
+// const UsersController = require("./controllers/usersController");
 
-router.get("/items", itemControllers.browse);
-router.get("/items/:id", itemControllers.read);
-router.put("/items/:id", itemControllers.edit);
-router.post("/items", itemControllers.add);
-router.delete("/items/:id", itemControllers.destroy);
+// Gestion events
+router.get("/events", EventsController.getAllEvents);
+router.post("/events", EventsController.createEvent);
+router.put("/events/:id", EventsController.updateEvent);
+router.delete("/events/:id", EventsController.deleteEvent);
+
+// Gestion users
+// router.get("/users", UsersController.getAll);
 
 module.exports = router;

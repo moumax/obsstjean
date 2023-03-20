@@ -1,19 +1,12 @@
-// import some node modules for later
-
-const fs = require("node:fs");
-const path = require("node:path");
-
-// create express app
-
 const express = require("express");
+const path = require("node:path");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const fs = require("node:fs");
+const router = require("./router");
+require("dotenv").config();
 
 const app = express();
-
-// use some application-level middlewares
-
-app.use(express.json());
-
-const cors = require("cors");
 
 app.use(
   cors({
@@ -22,15 +15,12 @@ app.use(
   })
 );
 
-// import and mount the API routes
-
-const router = require("./router");
-
-app.use(router);
-
-// serve the `backend/public` folder for public resources
+app.use(cookieParser());
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "../public")));
+
+app.use(router);
 
 // serve REACT APP
 
@@ -54,7 +44,5 @@ if (fs.existsSync(reactIndexFile)) {
     res.sendFile(reactIndexFile);
   });
 }
-
-// ready to export
 
 module.exports = app;
