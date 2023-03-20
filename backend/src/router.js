@@ -13,5 +13,6 @@ router.delete("/events/:id", EventsController.deleteEvent);
 
 // Gestion users
 // router.get("/users", UsersController.getAll);
+// test
 
 module.exports = router;
