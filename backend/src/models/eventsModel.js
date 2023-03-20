@@ -4,7 +4,27 @@ const prisma = new PrismaClient();
 
 const findAll = async () => {
   try {
-    return await prisma.events.findMany();
+    return await prisma.event.findMany();
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+const createOne = async (event) => {
+  try {
+    return await prisma.event.create({
+      data: { ...event },
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
+const deleteOne = async (eventId) => {
+  try {
+    return await prisma.event.delete({
+      where: { id: eventId },
+    });
   } finally {
     await prisma.$disconnect();
   }
@@ -12,4 +32,6 @@ const findAll = async () => {
 
 module.exports = {
   findAll,
+  createOne,
+  deleteOne,
 };
