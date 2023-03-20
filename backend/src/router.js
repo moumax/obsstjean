@@ -5,10 +5,13 @@ const router = express.Router();
 const EventsController = require("./controllers/eventsController");
 const UsersController = require("./controllers/usersController");
 
-router.get("/events", EventsController.getAll);
-router.post("/events", EventsController.createOne);
-router.delete("/events/:id", EventsController.deleteOne);
+// Gestion events
+router.get("/events", EventsController.getAllEvents);
+router.post("/events", EventsController.createEvent);
+router.put("/events/:id", EventsController.updateEvent);
+router.delete("/events/:id", EventsController.deleteEvent);
 
+// Gestion users
 router.get("/users", UsersController.getAll);
 
 module.exports = router;

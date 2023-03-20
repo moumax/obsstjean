@@ -1,22 +1,25 @@
-const event = require("../models/eventsModel");
+const { PrismaClient } = require("@prisma/client");
 const { validateEvent } = require("../utils/validate");
 
-const getAll = async (req, res) => {
-  const result = await event.findAll();
-  const newResults = result.map((elem) => ({
-    id: elem.id,
-    title: elem.title,
-    description: elem.description,
-    date: elem.date,
-    site: elem.site,
-    createdAt: elem.createdAt,
-    updatedAt: elem.updatedAt,
-    userId: elem.userId,
-  }));
-  res.status(200).json(newResults);
+const prisma = new PrismaClient();
+
+const getAllEvents = async (req, res) => {
+  try {
+    const events = await prisma.event.findMany();
+    if (events.length === 0) {
+      res.status(204).json({
+        Message: "La liste des events est vide",
+      });
+    } else res.json({ "Liste des events :": { events } });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      error: "Une erreur est survenue lors de la récupération des events",
+    });
+  }
 };
 
-const createOne = async (req, res) => {
+const createEvent = async (req, res) => {
   const { title, description, date, site, userId } = req.body;
   const error = validateEvent({
     title,
@@ -29,35 +32,84 @@ const createOne = async (req, res) => {
     res.status(422).json({ error });
   } else {
     try {
-      const eventCreated = await event.createOne({
-        title,
-        description,
-        date,
-        site,
-        userId,
+      const newEvent = await prisma.event.create({
+        data: {
+          title,
+          description,
+          date,
+          site,
+          user: {
+            connect: { id: Number(userId) },
+          },
+        },
       });
-      return res.status(201).send({ eventCreated });
+      res.json(newEvent);
     } catch (e) {
-      console.warn(e);
-      return res.status(500).json({ error: "Problème de création d'un event" });
+      console.error(e);
+      res.status(500).json({
+        error: "Une erreur est survenue lors de la création de l'événement.",
+      });
+    }
+  }
+};
+
+const updateEvent = async (req, res) => {
+  const eventId = Number(req.params.id);
+  const { title, description, date, site, userId } = req.body;
+  const error = validateEvent({
+    title,
+    description,
+    date,
+    site,
+    userId,
+  });
+  if (error) {
+    res.status(422).json({ error });
+  } else {
+    try {
+      const eventUpdated = await prisma.event.update({
+        where: { id: eventId },
+        data: {
+          title,
+          description,
+          date,
+          site,
+          userId,
+        },
+      });
+      return res.status(200).send({ eventUpdated });
+    } catch (e) {
+      console.error(e);
+      return res
+        .status(500)
+        .json({ error: "Impossible de mettre à jour l'event" });
+    } finally {
+      await prisma.$disconnect();
     }
   }
   return null;
 };
 
-const deleteOne = async (req, res) => {
-  const userId = parseInt(req.params.id, 10);
-
-  const result = await event.deleteOne(userId);
-  if (result) {
-    delete result.password_hash;
-    return res.status(200).json({ "utilisateur supprimé : ": { result } });
+const deleteEvent = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const event = await prisma.event.delete({
+      where: { id: Number(id) },
+    });
+    res.json({
+      message: `L'événement ${event.title} avec l'identifiant ${id} a été supprimé.`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: "Une erreur est survenue lors de la suppression de l'événement.",
+    });
   }
-  return res.status(404).json({ Erreur: "L'utilisateur n'existe pas" });
 };
 
 module.exports = {
-  getAll,
-  createOne,
-  deleteOne,
+  getAllEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent,
 };
