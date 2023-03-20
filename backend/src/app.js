@@ -3,11 +3,11 @@ const path = require("node:path");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const fs = require("node:fs");
-const router = require("./router");
 require("dotenv").config();
 
 const app = express();
 
+app.use(cookieParser());
 app.use(
   cors({
     origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
@@ -15,14 +15,18 @@ app.use(
   })
 );
 
-app.use(cookieParser());
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "../public")));
 
-app.use(router);
-
 // serve REACT APP
+const router = express.Router();
+const eventsRouter = require("./routes/eventsRouter");
+
+router.use("/events", eventsRouter);
+
+// API routes
+app.use("/api", router);
 
 const reactIndexFile = path.join(
   __dirname,
