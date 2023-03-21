@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 /* eslint-disable import/no-unresolved */
 import About from "@components/about/about";
 import Footer from "@components/footer/footer";
@@ -8,9 +9,13 @@ import Image from "../../assets/logo/logo.png";
 import EnterPointImage from "../../assets/enter_point/enter_point_image.jpg";
 
 export default function EnterPoint() {
+  const navigate = useNavigate();
   return (
     <>
       <header className="w-[90vw] mt-10 flex flex-col items-center bg-red-400">
+        <button type="button" onClick={() => navigate("/administration")}>
+          Administration
+        </button>
         <img
           className="w-[50vw]"
           src={Image}

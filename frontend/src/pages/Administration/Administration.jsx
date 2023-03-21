@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import useSWR, { useSWRConfig } from "swr";
 import Modal from "react-modal";
@@ -16,6 +17,8 @@ export default function Administration() {
   const [date, setDate] = useState("");
   const [site, setSite] = useState("");
   const [userId, setUserId] = useState(0);
+
+  const navigate = useNavigate();
 
   let subtitle;
 
@@ -165,6 +168,10 @@ export default function Administration() {
             <CardEventAdmin data={events} />
           </div>
         ))}
+
+        <button type="button" onClick={() => navigate("/")}>
+          Retouner à la page principale
+        </button>
       </section>
     </section>
   );
