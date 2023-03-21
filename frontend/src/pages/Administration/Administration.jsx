@@ -34,7 +34,7 @@ export default function Administration() {
     subtitle.style.color = "#f00";
   };
 
-  const openModal = () => {
+  const openModalAdd = () => {
     setIsOpen(true);
   };
 
@@ -50,6 +50,8 @@ export default function Administration() {
   const { data } = useSWR("events", fetcher);
   if (!data) return <h2>Loading...</h2>;
 
+  const { mutate } = useSWRConfig();
+
   const saveEvent = async (e) => {
     e.preventDefault();
     await axios.post("http://localhost:5000/api/events", {
@@ -59,7 +61,7 @@ export default function Administration() {
       site,
       userId,
     });
-    fetcher();
+    mutate("events");
     closeModal();
   };
 
@@ -67,9 +69,10 @@ export default function Administration() {
     <section>
       <section className="w-[90vw] mt-10 flex flex-col items-center ">
         <h2 className="bg-red-50 mb-5">Calendrier des évènements</h2>
-        <button type="button" onClick={openModal}>
+        <button type="button" onClick={openModalAdd}>
           Ajouter un évènement
         </button>
+
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
@@ -156,6 +159,7 @@ export default function Administration() {
             close
           </button>
         </Modal>
+
         {event.map((events) => (
           <div key={events.id}>
             <CardEventAdmin data={events} />
