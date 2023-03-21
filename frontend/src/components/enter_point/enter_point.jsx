@@ -6,7 +6,7 @@ import Observatoire from "@components/observatoire/observatoire";
 import Contact from "@components/contact/contact";
 import Events from "@components/events/events";
 import Image from "../../assets/logo/logo.png";
-import EnterPointImage from "../../assets/enter_point/enter_point_image.jpg";
+import EnterPointImage from "../../assets/enter_point/enter_point.jpg";
 
 export default function EnterPoint() {
   const navigate = useNavigate();

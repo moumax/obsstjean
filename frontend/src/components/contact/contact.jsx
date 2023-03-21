@@ -3,7 +3,7 @@ import Leaflet from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "./Leaflet.css";
 // import "./contact.css";
-import iconUrl from "../../assets/contact/marker.png";
+import iconUrl from "../../assets/contact/marker.webp";
 
 export default function Contact() {
   const position = [47.891346, 1.917617];
