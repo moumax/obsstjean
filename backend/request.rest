@@ -29,3 +29,33 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:5000/api/events/9
+
+
+
+
+###
+GET http://localhost:5000/api/users
+
+###
+GET http://localhost:5000/api/users/1
+
+###
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+    "email" : "marc@gmail.com",
+    "password_hash" : "dsfdsfdsfsdfsdf"
+}
+
+###
+PUT http://localhost:5000/api/users/2
+Content-Type: application/json
+
+{
+    "email" : "marcifdsjsdf@gmail.com",
+    "password_hash" : "motdepasse"
+}
+
+###
+DELETE http://localhost:5000/api/users/2
