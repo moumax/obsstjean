@@ -13,7 +13,11 @@ export default function EnterPoint() {
   return (
     <>
       <header className="w-[90vw] mt-10 flex flex-col items-center bg-red-400">
-        <button type="button" onClick={() => navigate("/administration")}>
+        <button
+          className="bg-blue-600"
+          type="button"
+          onClick={() => navigate("/administration")}
+        >
           Administration
         </button>
         <img

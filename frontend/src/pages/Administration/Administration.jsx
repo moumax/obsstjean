@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line no-unused-vars
 import useSWR, { useSWRConfig } from "swr";
 import Modal from "react-modal";
 import axios from "axios";
 import CardEventAdmin from "../../components/events/cardEventAdmin";
+import Users from "../../components/users/Users";
 // import eventAPI from "../../services/eventAPI";
 
 Modal.setAppElement("#root");
@@ -71,7 +72,7 @@ export default function Administration() {
   return (
     <section>
       <section className="w-[90vw] mt-10 flex flex-col items-center ">
-        <h2 className="bg-red-50 mb-5">Calendrier des évènements</h2>
+        <h2 className="text-2xl text-red-700">Calendrier des évènements</h2>
         <button type="button" onClick={openModalAdd}>
           Ajouter un évènement
         </button>
@@ -169,10 +170,15 @@ export default function Administration() {
           </div>
         ))}
 
-        <button type="button" onClick={() => navigate("/")}>
+        <button
+          className="bg-blue-700"
+          type="button"
+          onClick={() => navigate("/")}
+        >
           Retouner à la page principale
         </button>
       </section>
+      <Users />
     </section>
   );
 }
