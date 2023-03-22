@@ -23,8 +23,10 @@ app.use(express.static(path.join(__dirname, "../public")));
 // serve REACT APP
 const router = express.Router();
 const eventsRouter = require("./routes/eventsRouter");
+const usersRouter = require("./routes/usersRouter");
 
 router.use("/events", eventsRouter);
+router.use("/users", usersRouter);
 
 // API routes
 app.use("/api", router);
