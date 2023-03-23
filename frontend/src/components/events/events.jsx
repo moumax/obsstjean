@@ -1,13 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import useSWR, { useSWRConfig } from "swr";
-import axios from "axios";
-// import eventAPI from "../../services/eventAPI";
+import eventAPI from "../../services/eventAPI";
 import CardEvent from "./cardEvent";
 
 export default function EventsList() {
   // const { mutate } = useSWRConfig();
   const fetcher = async () => {
-    const response = await axios.get("http://localhost:5000/api/events");
+    const response = await eventAPI.get("http://localhost:5000/api/events");
     return response.data;
   };
   const { data } = useSWR("events", fetcher);

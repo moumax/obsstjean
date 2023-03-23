@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { useSWRConfig } from "swr";
-import axios from "axios";
+import { toast } from "react-toastify";
+import eventAPI from "../../services/eventAPI";
 
 const cardEventAdmin = (event) => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -28,15 +29,20 @@ const cardEventAdmin = (event) => {
 
   const saveEvent = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:5000/api/events/${event.data.id}`, {
-      title,
-      description,
-      date,
-      site,
-      userId,
-    });
-    mutate("events");
-    closeModal();
+    try {
+      await eventAPI.put(`http://localhost:5000/api/events/${event.data.id}`, {
+        title,
+        description,
+        date,
+        site,
+        userId,
+      });
+      mutate("events");
+      closeModal();
+      toast.success("Evènement mis à jour avec succès");
+    } catch (error) {
+      toast.error("Erreur dans le formulaire !!!");
+    }
   };
 
   const customStyles = {
@@ -51,8 +57,9 @@ const cardEventAdmin = (event) => {
   };
 
   const deleteEvent = async () => {
-    await axios.delete(`http://localhost:5000/api/events/${event.data.id}`);
+    await eventAPI.delete(`http://localhost:5000/api/events/${event.data.id}`);
     mutate("events");
+    toast.success(`L'évènement ${event.data.title} a été supprimé`);
   };
 
   return (

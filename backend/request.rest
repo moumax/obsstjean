@@ -61,3 +61,6 @@ Content-Type: application/json
 DELETE http://localhost:5000/api/users/1
 
 // Attention, la suppression du user1 est impossible car il a des events en cours.
+
+###
+POST http://localhost:5000/api/login

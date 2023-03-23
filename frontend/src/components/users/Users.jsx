@@ -1,12 +1,12 @@
 import { useState } from "react";
 import useSWR from "swr";
-import axios from "axios";
+import userAPI from "../../services/userAPI";
 /* eslint-disable react/function-component-definition */
 const Users = () => {
   const [users, setUsers] = useState([]);
 
   const fetcher = async () => {
-    const response = await axios.get("http://localhost:5000/api/users");
+    const response = await userAPI.get("http://localhost:5000/api/users");
     setUsers(response.data);
     return response.data;
   };
