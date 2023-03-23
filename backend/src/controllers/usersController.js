@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const { PrismaClient } = require("@prisma/client");
 const { validateUser } = require("../utils/validateUser");
+const { hashPassword } = require("../helpers/argonHelper");
 
 const prisma = new PrismaClient();
 
@@ -36,10 +37,11 @@ const createUser = async (req, res) => {
     res.status(422).json({ validate });
   } else {
     try {
+      const hashed = await hashPassword(password_hash);
       const user = await prisma.user.create({
         data: {
           email,
-          password_hash,
+          password_hash: hashed,
         },
       });
       res.status(201).json(user);
@@ -59,11 +61,12 @@ const updateUser = async (req, res) => {
     res.status(422).json({ validate });
   } else {
     try {
+      const hashed = await hashPassword(password_hash);
       const user = await prisma.user.update({
         where: { id: Number(req.params.id) },
         data: {
           email,
-          password_hash,
+          password_hash: hashed,
         },
       });
       res.status(200).json(user);

@@ -44,18 +44,23 @@ POST http://localhost:5000/api/users
 Content-Type: application/json
 
 {
-    "email" : "marc@gmail.com",
+    "email" : "totololoxwcwxcwxc@gmail.com",
     "password_hash" : "dsfdsfdsfsdfsdf"
 }
 
 ###
-PUT http://localhost:5000/api/users/2
+PUT http://localhost:5000/api/users/8
 Content-Type: application/json
 
 {
-    "email" : "marcifdsjsdf@gmail.com",
-    "password_hash" : "motdepasse"
+    "email" : "totolololilol@gmail.com",
+    "password_hash" : "motdepasse2"
 }
 
 ###
-DELETE http://localhost:5000/api/users/2
+DELETE http://localhost:5000/api/users/1
+
+// Attention, la suppression du user1 est impossible car il a des events en cours.
+
+###
+POST http://localhost:5000/api/login
