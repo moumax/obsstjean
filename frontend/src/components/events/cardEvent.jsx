@@ -7,6 +7,9 @@ import { toast } from "react-toastify";
 import eventAPI from "../../services/eventAPI";
 import CurrentUserContext from "../../contexts/userContext";
 
+import editButton from "../../assets/adminitration/edit.svg";
+import deleteButton from "../../assets/adminitration/delete.svg";
+
 const cardEvent = (event) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState(event.data.title);
@@ -87,22 +90,24 @@ const cardEvent = (event) => {
           <p className="text-white opacity-70 text-xs">{event.data.site}</p>
         </div>
         {user && currentPage !== "/" && (
-          <>
-            <button
-              type="submit"
-              onClick={() => openModalModify()}
-              className="font-medium bg-green-400 hover:bg-green-500 px-3 py-1 rounded text-white"
-            >
-              Modifier
+          <div className="flex gap-2 justify-end pt-4">
+            <button type="submit" onClick={() => openModalModify()}>
+              <img
+                className="w-[8vw]"
+                src={editButton}
+                alt="Editer un évènement"
+              />
+              <span />
             </button>
             <button
               type="submit"
               onClick={() => deleteEvent()}
-              className="font-medium bg-red-400 hover:bg-red-500 px-3 py-1 rounded text-white"
+              className="w-[8vw]"
             >
-              Suppr
+              <img src={deleteButton} alt="Supprimer un évènement" />
+              <span />
             </button>
-          </>
+          </div>
         )}
         <Modal
           isOpen={modalIsOpen}

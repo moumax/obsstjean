@@ -8,6 +8,8 @@ import CardEvent from "../../components/events/cardEvent";
 import Users from "../../components/users/Users";
 import eventAPI from "../../services/eventAPI";
 
+import addButton from "../../assets/adminitration/add.svg";
+
 Modal.setAppElement("#root");
 
 export default function Administration() {
@@ -90,9 +92,16 @@ export default function Administration() {
 
   return (
     <section className="w-[90vw] mt-10 flex flex-col items-center ">
-      <h2 className="text-2xl text-red-700">Calendrier des évènements</h2>
-      <button type="button" onClick={openModalAdd}>
-        Ajouter un évènement
+      <h2 className="text-2xl text-white font-exo2">
+        Calendrier des évènements
+      </h2>
+      <button
+        className="self-end pt-6 pb-6"
+        type="button"
+        onClick={openModalAdd}
+      >
+        <img className="w-[15vw]" src={addButton} alt="add an event" />
+        <span />
       </button>
 
       <Modal
@@ -189,11 +198,11 @@ export default function Administration() {
       ))}
 
       <button
-        className="bg-blue-700"
+        className="bg-blue-700 p-2 rounded-xl"
         type="button"
         onClick={() => navigate("/")}
       >
-        Retouner à la page principale
+        Retour
       </button>
       <Users />
     </section>
