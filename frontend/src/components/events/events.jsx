@@ -13,7 +13,7 @@ export default function EventsList() {
   if (!data) return <h2>Loading...</h2>;
 
   return (
-    <section className="w-[90vw] mt-10 flex flex-col items-center ">
+    <section className="w-[90vw] mt-10 flex flex-col items-center">
       <h2 className="font-exo2 text-xl text-white pb-4">
         Calendrier des évènements
       </h2>

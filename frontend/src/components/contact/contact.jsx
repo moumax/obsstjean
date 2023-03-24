@@ -16,12 +16,13 @@ export default function Contact() {
   });
 
   return (
-    <section className="bg-green-700 w-1/2 h-auto m-20">
+    <section className="w-[90vw] mt-10 flex flex-col items-center">
+      <h2 className="font-exo2 text-xl text-white pb-4">Nous contacter</h2>
       <MapContainer
         className="h-56 w-full overflow-hidden rounded-xl"
         center={position}
-        zoom={13}
-        scrollWheelZoom
+        zoom={17}
+        scrollWheelZoom={false}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -33,9 +34,11 @@ export default function Contact() {
       </MapContainer>
 
       <div className="flex flex-col items-center">
-        <p>Horaires d'ouverture :</p>
-        <p>Tous les Vendredis à partir de 21h</p>
-        <p>obsstjean AT gmail.com</p>
+        <p className="font-exo2 text-white">Horaires d'ouverture :</p>
+        <p className="font-exo2  text-white">
+          Tous les Vendredis à partir de 21h
+        </p>
+        <p className="font-exo2  text-white">obsstjean AT gmail.com</p>
       </div>
     </section>
   );
