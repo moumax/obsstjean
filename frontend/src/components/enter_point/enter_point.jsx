@@ -30,10 +30,10 @@ export default function EnterPoint() {
 
   return (
     <>
-      <header className="w-[90vw] mt-10 flex flex-col items-center bg-red-400">
+      <header className="w-[90vw] mt-10 flex flex-col items-center">
         {user && (
           <button
-            className="bg-blue-600"
+            className="bg-blue-600 rounded-lg p-1 text-white absolute top-3 right-20"
             type="button"
             onClick={() => navigate("/administration")}
           >
@@ -42,7 +42,7 @@ export default function EnterPoint() {
         )}
         {user && (
           <button
-            className="bg-blue-600"
+            className="bg-red-600 rounded-lg p-1 text-white absolute top-3 right-1"
             type="button"
             onClick={() => {
               handleDisconnect();
@@ -53,7 +53,7 @@ export default function EnterPoint() {
         )}
         {!user && (
           <button
-            className="bg-blue-600"
+            className="bg-blue-600 rounded-lg p-1 text-white absolute top-3 right-5"
             type="button"
             onClick={() => navigate("/login")}
           >
