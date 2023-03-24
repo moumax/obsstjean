@@ -14,7 +14,9 @@ export default function EventsList() {
 
   return (
     <section className="w-[90vw] mt-10 flex flex-col items-center ">
-      <h2 className="bg-red-50 mb-5">Calendrier des évènements</h2>
+      <h2 className="font-exo2 text-xl text-white pb-4">
+        Calendrier des évènements
+      </h2>
       {data.map((event) => (
         <div key={event.id}>
           <CardEvent data={event} />
