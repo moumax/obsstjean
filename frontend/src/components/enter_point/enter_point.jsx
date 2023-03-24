@@ -30,10 +30,10 @@ export default function EnterPoint() {
 
   return (
     <>
-      <header className="w-[90vw] mt-10 flex flex-col items-center bg-red-400">
+      <header className="w-[90vw] mt-10 flex flex-col items-center">
         {user && (
           <button
-            className="bg-blue-600"
+            className="bg-blue-600 rounded-lg p-1 text-white absolute top-3 right-20"
             type="button"
             onClick={() => navigate("/administration")}
           >
@@ -42,7 +42,7 @@ export default function EnterPoint() {
         )}
         {user && (
           <button
-            className="bg-blue-600"
+            className="bg-red-600 rounded-lg p-1 text-white absolute top-3 right-1"
             type="button"
             onClick={() => {
               handleDisconnect();
@@ -53,7 +53,7 @@ export default function EnterPoint() {
         )}
         {!user && (
           <button
-            className="bg-blue-600"
+            className="bg-blue-600 rounded-lg p-1 text-white absolute top-3 right-5"
             type="button"
             onClick={() => navigate("/login")}
           >
@@ -61,18 +61,24 @@ export default function EnterPoint() {
           </button>
         )}
 
-        <img
-          className="w-[50vw]"
-          src={Image}
-          alt="logo observatoire de saint jean le blanc"
-        />
-        <h1>Observatoire de Saint Jean Le Blanc</h1>
-        <h2>Association loi 1901 pour la promotion de l'astronomie amateur</h2>
-        <img
-          className="my-5 rounded-xl"
-          src={EnterPointImage}
-          alt="observatoire"
-        />
+        <div className="flex flex-col items-center mt-10 text-center">
+          <img
+            className="w-[50vw]"
+            src={Image}
+            alt="logo observatoire de saint jean le blanc"
+          />
+          <h1 className="text-xl font-exo2 text-transparent bg-clip-text bg-gradient-to-b from-[#fffc08] to-[#575506] pt-3">
+            Observatoire de Saint Jean Le Blanc
+          </h1>
+          <h2 className="text-sm  font-exo2 text-white opacity-50 break-keep pt-1">
+            Association loi 1901 pour la promotion de l'astronomie amateur
+          </h2>
+          <img
+            className="my-5 rounded-xl"
+            src={EnterPointImage}
+            alt="observatoire"
+          />
+        </div>
       </header>
       <Observatoire />
       <About />
