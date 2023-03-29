@@ -73,42 +73,44 @@ const cardEvent = (event) => {
 
   return (
     <div className="w-96 flex flex-col items-center ">
-      <div className="w-[90vw] border-solid border-2 border-yellow-300 p-3 rounded-xl mb-5">
-        <div className="flex justify-between items-center">
-          <p className="text-white opacity-50 text-xs pb-10">
+      <div className="w-[90vw] border-solid border-[1px] border-blue-900 rounded-xl mb-5">
+        <div className="flex items-center space-x-4 bg-white/10">
+          <p className="text-white opacity-50 text-xs pb-10 px-5">
             <Moment locale="fr" format="LL">
               {event.data.date}
             </Moment>
           </p>
           <h3 className="text-white opacity-70 text-sm">{event.data.title}</h3>
         </div>
-        <p className="text-white opacity-50 text-xs">
-          {event.data.description}
-        </p>
-        <div className="flex justify-between pt-10">
-          <p className="text-white opacity-70 text-xs">A quel endroit ?</p>
-          <p className="text-white opacity-70 text-xs">{event.data.site}</p>
-        </div>
-        {user && currentPage !== "/" && (
-          <div className="flex gap-2 justify-end pt-4">
-            <button type="submit" onClick={() => openModalModify()}>
-              <img
-                className="w-[8vw]"
-                src={editButton}
-                alt="Editer un évènement"
-              />
-              <span />
-            </button>
-            <button
-              type="submit"
-              onClick={() => deleteEvent()}
-              className="w-[8vw]"
-            >
-              <img src={deleteButton} alt="Supprimer un évènement" />
-              <span />
-            </button>
+        <div className="bg-white/5 px-5">
+          <p className="text-white opacity-50 text-xs">
+            {event.data.description}
+          </p>
+          <div className="flex justify-between pt-10">
+            <p className="text-white opacity-70 text-xs">A quel endroit ?</p>
+            <p className="text-white opacity-70 text-xs">{event.data.site}</p>
           </div>
-        )}
+          {user && currentPage !== "/" && (
+            <div className="flex gap-2 justify-end pt-4">
+              <button type="submit" onClick={() => openModalModify()}>
+                <img
+                  className="w-[8vw]"
+                  src={editButton}
+                  alt="Editer un évènement"
+                />
+                <span />
+              </button>
+              <button
+                type="submit"
+                onClick={() => deleteEvent()}
+                className="w-[8vw]"
+              >
+                <img src={deleteButton} alt="Supprimer un évènement" />
+                <span />
+              </button>
+            </div>
+          )}
+        </div>
         <Modal
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}

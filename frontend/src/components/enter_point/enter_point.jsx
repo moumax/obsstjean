@@ -9,6 +9,7 @@ import Events from "@components/events/events";
 import { toast } from "react-toastify";
 import userAPI from "../../services/userAPI";
 import CurrentUserContext from "../../contexts/userContext";
+import Button from "../assets/Button";
 
 import Image from "../../assets/logo/logo.png";
 import EnterPointImage from "../../assets/enter_point/enter_point.jpg";
@@ -31,35 +32,31 @@ export default function EnterPoint() {
   return (
     <>
       <header className="w-[90vw] mt-10 flex flex-col items-center">
-        {user && (
-          <button
-            className="bg-blue-600 rounded-lg p-1 text-white absolute top-3 right-20"
-            type="button"
-            onClick={() => navigate("/administration")}
-          >
-            Administration
-          </button>
-        )}
-        {user && (
-          <button
-            className="bg-red-600 rounded-lg p-1 text-white absolute top-3 right-1"
-            type="button"
-            onClick={() => {
-              handleDisconnect();
-            }}
-          >
-            Logout
-          </button>
-        )}
-        {!user && (
-          <button
-            className="bg-blue-600 rounded-lg p-1 text-white absolute top-3 right-5"
-            type="button"
-            onClick={() => navigate("/login")}
-          >
-            Login
-          </button>
-        )}
+        <div className="flex gap-2 absolute top-2 right-2">
+          {user && (
+            <Button
+              label="Administration"
+              bgprimary="bg-blue-600"
+              onClick={() => navigate("/administration")}
+            />
+          )}
+          {user && (
+            <Button
+              label="Logout"
+              bgprimary="bg-red-600"
+              onClick={() => {
+                handleDisconnect();
+              }}
+            />
+          )}
+          {!user && (
+            <Button
+              label="Login"
+              bgprimary="bg-blue-600"
+              onClick={() => navigate("/login")}
+            />
+          )}
+        </div>
 
         <div className="flex flex-col items-center mt-10 text-center">
           <img
