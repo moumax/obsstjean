@@ -100,7 +100,7 @@ export default function UsersAdministration() {
           onClick={() => openModal()}
         />
       </div>
-      <Users />;
+      <Users />
     </>
   );
 }
