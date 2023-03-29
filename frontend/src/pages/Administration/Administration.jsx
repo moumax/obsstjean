@@ -59,7 +59,7 @@ export default function Administration() {
 
   const { mutate } = useSWRConfig();
 
-  const saveEvent = async (e) => {
+  const createEvent = async (e) => {
     e.preventDefault();
     try {
       await eventAPI.post("http://localhost:5000/api/events", {
@@ -180,7 +180,7 @@ export default function Administration() {
           />
         </div>
         <button
-          onClick={saveEvent}
+          onClick={createEvent}
           type="submit"
           className="w-full py-3 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow"
         >
