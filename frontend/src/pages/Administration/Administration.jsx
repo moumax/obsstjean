@@ -5,7 +5,7 @@ import useSWR, { useSWRConfig } from "swr";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import CardEvent from "../../components/events/cardEvent";
-import Users from "../../components/users/Users";
+import UsersAdministration from "../../components/administration/UsersAdministration";
 import eventAPI from "../../services/eventAPI";
 import Button from "../../components/assets/Button";
 
@@ -197,8 +197,7 @@ export default function Administration() {
           <CardEvent data={events} />
         </div>
       ))}
-
-      <Users />
+      <UsersAdministration />
       <div className="flex self-end py-4">
         <Button
           label="Retour"
