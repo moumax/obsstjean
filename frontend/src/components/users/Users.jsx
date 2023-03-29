@@ -16,13 +16,15 @@ const Users = () => {
   //   const { mutate } = useSWRConfig();
 
   return (
-    <div>
-      <h2 className="text-2xl text-red-700">
-        Liste et gestion des utilisateurs
+    <div className="w-full flex justify-center">
+      <h2 className="text-2xl text-white font-exo2">
+        Liste des utilisateurs
         {users.map((user) => (
-          <div key={user.id}>
+          <div
+            className="text-white font-exo2 text-xs text-center"
+            key={user.id}
+          >
             <p>{user.email}</p>
-            <p>{user.password_hash}</p>
           </div>
         ))}
       </h2>

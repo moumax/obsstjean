@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import userAPI from "../../services/userAPI";
+import Button from "../../components/assets/Button";
 
 import CurrentUserContext from "../../contexts/userContext";
 
@@ -41,26 +42,36 @@ export default function Login() {
   };
 
   return (
-    <section id="login">
+    <section
+      className="w-[90vw] h-[100vh] mt-10 flex flex-col items-center justify-center"
+      id="login"
+    >
       <div>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            id="user"
-            name="user"
-            placeholder="Votre email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            id="pass"
-            name="pass"
-            placeholder="Votre mot de passe"
-            onChange={(e) => setPass(e.target.value)}
-          />
-          <button className="login-button" type="submit">
-            Se connecter
-          </button>
+          <div className="flex flex-col w-[60vw] gap-2 py-5">
+            <input
+              className="rounded-xl h-10 text-center"
+              type="text"
+              id="user"
+              name="user"
+              placeholder="Votre email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              className="rounded-xl h-10 text-center"
+              type="password"
+              id="pass"
+              name="pass"
+              placeholder="Votre mot de passe"
+              onChange={(e) => setPass(e.target.value)}
+            />
+            <Button
+              label="Login"
+              type="submit"
+              bgprimary="bg-blue-600"
+              onClick={() => handleSubmit()}
+            />
+          </div>
         </form>
       </div>
     </section>

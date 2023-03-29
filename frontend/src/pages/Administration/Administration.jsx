@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import CardEvent from "../../components/events/cardEvent";
 import Users from "../../components/users/Users";
 import eventAPI from "../../services/eventAPI";
+import Button from "../../components/assets/Button";
 
 import addButton from "../../assets/adminitration/add.svg";
 
@@ -197,14 +198,14 @@ export default function Administration() {
         </div>
       ))}
 
-      <button
-        className="bg-blue-700 p-2 rounded-xl"
-        type="button"
-        onClick={() => navigate("/")}
-      >
-        Retour
-      </button>
       <Users />
+      <div className="flex self-end py-4">
+        <Button
+          label="Retour"
+          bgprimary="bg-blue-600"
+          onClick={() => navigate("/")}
+        />
+      </div>
     </section>
   );
 }
