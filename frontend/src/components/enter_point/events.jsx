@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import useSWR, { useSWRConfig } from "swr";
-import eventAPI from "../../services/eventAPI";
+import eventAPI from "../../services/axiosAPI";
 import CardEvent from "../administration/CardEvent";
 
 export default function EventsList() {

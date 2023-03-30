@@ -4,7 +4,7 @@ import useSWR, { useSWRConfig } from "swr";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import CardEvent from "./CardEvent";
-import eventAPI from "../../services/eventAPI";
+import eventAPI from "../../services/axiosAPI";
 // import Button from "../assets/Button";
 
 import addButton from "../../assets/administration/add.svg";

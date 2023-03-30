@@ -2,7 +2,7 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { useSWRConfig } from "swr";
 import { toast } from "react-toastify";
-import userAPI from "../../services/userAPI";
+import axiosAPI from "../../services/axiosAPI";
 
 import editButton from "../../assets/administration/edit.svg";
 import deleteUserSvg from "../../assets/administration/deleteUser.svg";
@@ -24,7 +24,7 @@ const cardUser = (user) => {
   const modifyUser = async (e) => {
     e.preventDefault();
     try {
-      await userAPI.put(`http://localhost:5000/api/users/${user.data.id}`, {
+      await axiosAPI.put(`http://localhost:5000/api/users/${user.data.id}`, {
         email,
         password_hash: password,
       });
@@ -37,7 +37,7 @@ const cardUser = (user) => {
   };
 
   const deleteUser = async () => {
-    await userAPI.delete(`http://localhost:5000/api/users/${user.data.id}`);
+    await axiosAPI.delete(`http://localhost:5000/api/users/${user.data.id}`);
     mutate("users");
     toast.success(`L'utilisateur ${user.data.email} a été supprimé`);
   };

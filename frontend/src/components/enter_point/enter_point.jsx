@@ -7,7 +7,7 @@ import Observatoire from "@components/observatoire/observatoire";
 import Contact from "@components/contact/contact";
 import Events from "@components/enter_point/events";
 import { toast } from "react-toastify";
-import userAPI from "../../services/userAPI";
+import axiosAPI from "../../services/axiosAPI";
 import CurrentUserContext from "../../contexts/userContext";
 import Button from "../assets/Button";
 
@@ -19,7 +19,7 @@ export default function EnterPoint() {
   const navigate = useNavigate();
 
   const handleDisconnect = () => {
-    userAPI
+    axiosAPI
       .get("http://localhost:5000/api/auth/logout")
       .then(() => {
         localStorage.clear();
