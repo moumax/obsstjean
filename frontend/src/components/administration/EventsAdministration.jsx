@@ -31,8 +31,11 @@ export default function EventsAdministration() {
 
   const fetcherEvent = async () => {
     const response = await eventAPI.get("http://localhost:5000/api/events");
-    setEvent(response.data);
-    return response.data;
+    const sortedEvents = response.data.sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    );
+    setEvent(sortedEvents);
+    return sortedEvents;
   };
   const { data } = useSWR("events", fetcherEvent);
   if (!data) return <h2>Loading...</h2>;
