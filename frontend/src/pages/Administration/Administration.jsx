@@ -8,7 +8,7 @@ export default function Administration() {
   const navigate = useNavigate();
 
   return (
-    <section className="w-[90vw] mt-10 flex flex-col items-center ">
+    <section className="w-[90vw] mt-10 flex flex-col items-center">
       <EventsAdministration />
       <UsersAdministration />
       <div className="self-end py-4">

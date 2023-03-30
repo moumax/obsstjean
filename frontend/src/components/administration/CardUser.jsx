@@ -4,7 +4,7 @@ import { useSWRConfig } from "swr";
 import { toast } from "react-toastify";
 import axiosAPI from "../../services/axiosAPI";
 
-import editButton from "../../assets/administration/edit.svg";
+import editUser from "../../assets/administration/editUser.svg";
 import deleteUserSvg from "../../assets/administration/deleteUser.svg";
 
 const cardUser = (user) => {
@@ -45,34 +45,39 @@ const cardUser = (user) => {
   const currentPage = window.location.pathname;
 
   return (
-    <div className="w-96 flex flex-col items-center ">
-      <div className="w-[90vw] border-solid border-[1px] border-blue-900 rounded-xl mb-5">
-        <div className="bg-white/5 px-5">
-          <p className="font-exo2 text-white">Email :</p>
-          <h3 className="text-white opacity-70 text-sm font-exo2">
-            {user.data.email}
-          </h3>
-          <p className="font-exo2 text-white">Role :</p>
-          {user && currentPage !== "/" && (
-            <div className="flex gap-2 justify-end pt-4">
-              <button type="submit" onClick={() => openModalModify()}>
-                <img
+    <div className="flex flex-col items-center">
+      <div className="w-[90vw] mb-5 bg-white/10 rounded-xl p-5 font-exo2 shadow-xl">
+        <div className=" w-full flex justify-between">
+          <div>
+            <p className="text-white">Email :</p>
+            <h3 className="text-white opacity-70 text-sm pl-3">
+              {user.data.email}
+            </h3>
+            <p className="text-white">Role :</p>
+            <h3 className="text-white opacity-70 text-sm pl-3">A définir</h3>
+          </div>
+          <div className="self-center">
+            {user && currentPage !== "/" && (
+              <div className="flex gap-2 justify-end pt-4">
+                <button type="submit" onClick={() => openModalModify()}>
+                  <img
+                    className="w-[8vw]"
+                    src={editUser}
+                    alt="Editer un utilisateur"
+                  />
+                  <span />
+                </button>
+                <button
+                  type="submit"
+                  onClick={() => deleteUser()}
                   className="w-[8vw]"
-                  src={editButton}
-                  alt="Editer un utilisateur"
-                />
-                <span />
-              </button>
-              <button
-                type="submit"
-                onClick={() => deleteUser()}
-                className="w-[8vw]"
-              >
-                <img src={deleteUserSvg} alt="Supprimer un utilisateur" />
-                <span />
-              </button>
-            </div>
-          )}
+                >
+                  <img src={deleteUserSvg} alt="Supprimer un utilisateur" />
+                  <span />
+                </button>
+              </div>
+            )}
+          </div>
         </div>
         <Modal
           isOpen={modalIsOpen}

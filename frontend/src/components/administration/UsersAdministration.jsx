@@ -52,12 +52,12 @@ export default function UsersAdministration() {
     }
   };
   return (
-    <section className="w-[90vw] mt-10 flex flex-col items-center ">
+    <section className="w-[90vw] mt-10 flex flex-col items-center">
       <h2 className="text-2xl text-white font-exo2">Liste des utilisateurs</h2>
       <div className="flex self-end py-4">
         <Button
           label="Créer un utilisateur"
-          bgprimary="bg-blue-600"
+          bgprimary="bg-green-600"
           onClick={() => openModalAdd()}
         />
       </div>
@@ -87,7 +87,7 @@ export default function UsersAdministration() {
           </label>
           <input
             id="password_hash"
-            type="text"
+            type="password"
             className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
             placeholder="Mot de passe"
             value={password}
