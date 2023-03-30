@@ -3,11 +3,11 @@ import { useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
-import CardEvent from "../events/cardEvent";
+import CardEvent from "./CardEvent";
 import eventAPI from "../../services/eventAPI";
 // import Button from "../assets/Button";
 
-import addButton from "../../assets/adminitration/add.svg";
+import addButton from "../../assets/administration/add.svg";
 
 Modal.setAppElement("#root");
 

@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import useSWR, { useSWRConfig } from "swr";
 import eventAPI from "../../services/eventAPI";
-import CardEvent from "./cardEvent";
+import CardEvent from "../administration/CardEvent";
 
 export default function EventsList() {
   // const { mutate } = useSWRConfig();

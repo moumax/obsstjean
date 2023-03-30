@@ -3,11 +3,9 @@ import Modal from "react-modal";
 import { useSWRConfig } from "swr";
 import { toast } from "react-toastify";
 import userAPI from "../../services/userAPI";
-// import CurrentUserContext from "../../contexts/userContext";
 
-import editButton from "../../assets/adminitration/edit.svg";
-
-import deleteUserSvg from "../../assets/adminitration/deleteUser.svg";
+import editButton from "../../assets/administration/edit.svg";
+import deleteUserSvg from "../../assets/administration/deleteUser.svg";
 
 const cardUser = (user) => {
   const [modalIsOpen, setIsOpen] = useState(false);
