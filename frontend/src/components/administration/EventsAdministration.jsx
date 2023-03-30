@@ -3,6 +3,7 @@ import { useState } from "react";
 import useSWR, { useSWRConfig } from "swr";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
+import Moment from "moment";
 import CardEvent from "./CardEvent";
 import eventAPI from "../../services/axiosAPI";
 // import Button from "../assets/Button";
@@ -40,11 +41,12 @@ export default function EventsAdministration() {
 
   const createEvent = async (e) => {
     e.preventDefault();
+    const newDate = Moment(date).toISOString();
     try {
       await eventAPI.post("http://localhost:5000/api/events", {
         title,
         description,
-        date,
+        date: newDate,
         site,
         userId,
       });
@@ -123,7 +125,7 @@ export default function EventsAdministration() {
           </label>
           <input
             id="date"
-            type="text"
+            type="date"
             className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
             placeholder="Date"
             value={date}
