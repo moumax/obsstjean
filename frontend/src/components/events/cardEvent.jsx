@@ -18,12 +18,7 @@ const cardEvent = (event) => {
   const [site, setSite] = useState(event.data.site);
   const [userId, setUserId] = useState(event.data.userId);
   const { user } = useContext(CurrentUserContext);
-
-  let subtitle;
-
-  const afterOpenModal = () => {
-    subtitle.style.color = "#f00";
-  };
+  const { mutate } = useSWRConfig();
 
   const openModalModify = () => {
     setIsOpen(true);
@@ -32,9 +27,8 @@ const cardEvent = (event) => {
   const closeModal = () => {
     setIsOpen(false);
   };
-  const { mutate } = useSWRConfig();
 
-  const saveEvent = async (e) => {
+  const modifyEvent = async (e) => {
     e.preventDefault();
     try {
       await eventAPI.put(`http://localhost:5000/api/events/${event.data.id}`, {
@@ -50,17 +44,6 @@ const cardEvent = (event) => {
     } catch (error) {
       toast.error("Erreur dans le formulaire !!!");
     }
-  };
-
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
   };
 
   const deleteEvent = async () => {
@@ -113,9 +96,7 @@ const cardEvent = (event) => {
         </div>
         <Modal
           isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
-          style={customStyles}
           contentLabel="Example Modal"
         >
           <h2>Modifier un évènement</h2>
@@ -186,7 +167,7 @@ const cardEvent = (event) => {
             />
           </div>
           <button
-            onClick={saveEvent}
+            onClick={modifyEvent}
             type="submit"
             className="w-full py-3 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow"
           >
