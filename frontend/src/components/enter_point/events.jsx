@@ -4,10 +4,12 @@ import eventAPI from "../../services/axiosAPI";
 import CardEvent from "../administration/CardEvent";
 
 export default function EventsList() {
-  // const { mutate } = useSWRConfig();
   const fetcher = async () => {
     const response = await eventAPI.get("http://localhost:5000/api/events");
-    return response.data;
+    const sortedEvents = response.data.sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    );
+    return sortedEvents;
   };
   const { data } = useSWR("events", fetcher);
   if (!data) return <h2>Loading...</h2>;
