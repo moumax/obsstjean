@@ -1,26 +1,34 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
-import { useSWRConfig } from "swr";
+import useSWR, { useSWRConfig } from "swr";
+import CardUser from "./CardUser";
 import Button from "../assets/Button";
 import userAPI from "../../services/userAPI";
-
-import Users from "../users/Users";
 
 Modal.setAppElement("#root");
 
 export default function UsersAdministration() {
-  // const [user, setUser] = useState([]);
+  const [user, setUser] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const openModal = () => {
+
+  const openModalAdd = () => {
     setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const fetcherUser = async () => {
+    const response = await userAPI.get("http://localhost:5000/api/users");
+    setUser(response.data);
+    return response.data;
+  };
+  const { data } = useSWR("users", fetcherUser);
+  if (!data) return <h2>Loading...</h2>;
 
   const { mutate } = useSWRConfig();
 
@@ -33,7 +41,7 @@ export default function UsersAdministration() {
       });
       mutate("users");
       closeModal();
-      toast.success("Nouvel évènement crée avec succès");
+      toast.success("Nouvel utilisateur crée avec succès");
     } catch (error) {
       if (!email) {
         toast.error('Le champ "Email" est vide !');
@@ -44,12 +52,18 @@ export default function UsersAdministration() {
     }
   };
   return (
-    <>
+    <section className="w-[90vw] mt-10 flex flex-col items-center ">
+      <h2 className="text-2xl text-white font-exo2">Liste des utilisateurs</h2>
+      <div className="flex self-end py-4">
+        <Button
+          label="Créer un utilisateur"
+          bgprimary="bg-blue-600"
+          onClick={() => openModalAdd()}
+        />
+      </div>
       <Modal
         isOpen={modalIsOpen}
-        // onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
-        // style={customStyles}
         contentLabel="Example Modal"
       >
         <h2>Ajouter un utilisateur</h2>
@@ -93,14 +107,11 @@ export default function UsersAdministration() {
           close
         </button>
       </Modal>
-      <div className="flex self-end py-4">
-        <Button
-          label="Créer un utilisateur"
-          bgprimary="bg-blue-600"
-          onClick={() => openModal()}
-        />
-      </div>
-      <Users />
-    </>
+      {user.map((users) => (
+        <div key={users.id}>
+          <CardUser data={users} />
+        </div>
+      ))}
+    </section>
   );
 }
