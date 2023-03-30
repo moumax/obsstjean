@@ -56,20 +56,22 @@ const cardEvent = (event) => {
 
   return (
     <div className="w-96 flex flex-col items-center ">
-      <div className="w-[90vw] border-solid border-[1px] border-blue-900 rounded-xl mb-5">
-        <div className="flex items-center space-x-4 bg-white/10">
-          <p className="text-white opacity-50 text-xs pb-10 px-5">
+      <div className="w-[90vw] mb-5">
+        <div className="flex flex-col items-center bg-white/10 rounded-t-xl">
+          <p className="text-white opacity-50 text-xs px-5 pt-3 self-start">
             <Moment locale="fr" format="LL">
               {event.data.date}
             </Moment>
           </p>
-          <h3 className="text-white opacity-70 text-sm">{event.data.title}</h3>
+          <h3 className="text-yellow-300 self-end px-5 pb-3">
+            {event.data.title}
+          </h3>
         </div>
-        <div className="bg-white/5 px-5">
-          <p className="text-white opacity-50 text-xs">
+        <div className="bg-white/5 px-5 rounded-b-xl shadow-xl">
+          <p className="text-white opacity-50 text-xs pt-2">
             {event.data.description}
           </p>
-          <div className="flex justify-between pt-10">
+          <div className="flex justify-between pt-10 pb-2">
             <p className="text-white opacity-70 text-xs">A quel endroit ?</p>
             <p className="text-white opacity-70 text-xs">{event.data.site}</p>
           </div>
