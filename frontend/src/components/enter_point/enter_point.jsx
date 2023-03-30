@@ -5,7 +5,7 @@ import About from "@components/about/about";
 import Footer from "@components/footer/footer";
 import Observatoire from "@components/observatoire/observatoire";
 import Contact from "@components/contact/contact";
-import Events from "@components/events/events";
+import Events from "@components/enter_point/events";
 import { toast } from "react-toastify";
 import userAPI from "../../services/userAPI";
 import CurrentUserContext from "../../contexts/userContext";

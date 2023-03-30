@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 import eventAPI from "../../services/eventAPI";
 import CurrentUserContext from "../../contexts/userContext";
 
-import editButton from "../../assets/adminitration/edit.svg";
-import deleteButton from "../../assets/adminitration/delete.svg";
+import editButton from "../../assets/administration/edit.svg";
+import deleteButton from "../../assets/administration/delete.svg";
 
 const cardEvent = (event) => {
   const [modalIsOpen, setIsOpen] = useState(false);
