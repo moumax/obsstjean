@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import useSWR, { useSWRConfig } from "swr";
 import CardUser from "./CardUser";
 import Button from "../assets/Button";
-import userAPI from "../../services/userAPI";
+import axiosAPI from "../../services/axiosAPI";
 
 Modal.setAppElement("#root");
 
@@ -23,7 +23,7 @@ export default function UsersAdministration() {
   };
 
   const fetcherUser = async () => {
-    const response = await userAPI.get("http://localhost:5000/api/users");
+    const response = await axiosAPI.get("http://localhost:5000/api/users");
     setUser(response.data);
     return response.data;
   };
@@ -35,7 +35,7 @@ export default function UsersAdministration() {
   const createUser = async (e) => {
     e.preventDefault();
     try {
-      await userAPI.post("http://localhost:5000/api/users", {
+      await axiosAPI.post("http://localhost:5000/api/users", {
         email,
         password_hash: password,
       });

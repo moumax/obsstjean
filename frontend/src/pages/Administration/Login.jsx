@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import userAPI from "../../services/userAPI";
+import axiosAPI from "../../services/axiosAPI";
 import Button from "../../components/assets/Button";
 
 import CurrentUserContext from "../../contexts/userContext";
@@ -18,7 +18,7 @@ export default function Login() {
     e.preventDefault();
 
     if (email && pass) {
-      userAPI
+      axiosAPI
         .post("http://localhost:5000/api/auth/login", {
           email,
           pass,

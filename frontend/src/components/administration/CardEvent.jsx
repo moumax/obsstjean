@@ -4,7 +4,7 @@ import { useSWRConfig } from "swr";
 import Moment from "react-moment";
 import "moment/locale/fr";
 import { toast } from "react-toastify";
-import eventAPI from "../../services/eventAPI";
+import eventAPI from "../../services/axiosAPI";
 import CurrentUserContext from "../../contexts/userContext";
 
 import editButton from "../../assets/administration/edit.svg";
