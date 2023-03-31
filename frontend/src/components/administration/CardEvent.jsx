@@ -47,6 +47,7 @@ function CardEvent({ data }) {
     mutate("events");
     toast.success(`L'évènement ${data.title} a été supprimé`);
   };
+
   const currentPage = window.location.pathname;
   return (
     <div className="w-96 flex flex-col items-center ">
