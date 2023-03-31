@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import { toast } from "react-toastify";
 import Moment from "moment";
 import CardEvent from "./CardEvent";
-import eventAPI from "../../services/axiosAPI";
+import axiosAPI from "../../services/axiosAPI";
 // import Button from "../assets/Button";
 
 import addButton from "../../assets/administration/add.svg";
@@ -30,7 +30,7 @@ export default function EventsAdministration() {
   };
 
   const fetcherEvent = async () => {
-    const response = await eventAPI.get("http://localhost:5000/api/events");
+    const response = await axiosAPI.get("http://localhost:5000/api/events");
     const sortedEvents = response.data.sort(
       (a, b) => new Date(a.date) - new Date(b.date)
     );
@@ -46,7 +46,7 @@ export default function EventsAdministration() {
     e.preventDefault();
     const newDate = Moment(date).toISOString();
     try {
-      await eventAPI.post("http://localhost:5000/api/events", {
+      await axiosAPI.post("http://localhost:5000/api/events", {
         title,
         description,
         date: newDate,
