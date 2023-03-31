@@ -10,28 +10,25 @@ import CurrentUserContext from "../../contexts/userContext";
 import editEvent from "../../assets/administration/editEvent.svg";
 import eraseEvent from "../../assets/administration/deleteEvent.svg";
 
-const cardEvent = (event) => {
+function CardEvent({ data }) {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState(event.data.title);
-  const [description, setDescription] = useState(event.data.description);
-  const [date, setDate] = useState(event.data.date);
-  const [site, setSite] = useState(event.data.site);
-  const [userId, setUserId] = useState(event.data.userId);
+  const [title, setTitle] = useState(data.title);
+  const [description, setDescription] = useState(data.description);
+  const [date, setDate] = useState(data.date);
+  const [site, setSite] = useState(data.site);
+  const [userId, setUserId] = useState(data.userId);
   const { user } = useContext(CurrentUserContext);
   const { mutate } = useSWRConfig();
-
   const openModalModify = () => {
     setIsOpen(true);
   };
-
   const closeModal = () => {
     setIsOpen(false);
   };
-
   const modifyEvent = async (e) => {
     e.preventDefault();
     try {
-      await axiosAPI.put(`http://localhost:5000/api/events/${event.data.id}`, {
+      await axiosAPI.put(`http://localhost:5000/api/events/${data.id}`, {
         title,
         description,
         date,
@@ -45,35 +42,30 @@ const cardEvent = (event) => {
       toast.error("Erreur dans le formulaire !!!");
     }
   };
-
   const deleteEvent = async () => {
-    await axiosAPI.delete(`http://localhost:5000/api/events/${event.data.id}`);
+    await axiosAPI.delete(`http://localhost:5000/api/events/${data.id}`);
     mutate("events");
-    toast.success(`L'évènement ${event.data.title} a été supprimé`);
+    toast.success(`L'évènement ${data.title} a été supprimé`);
   };
-
   const currentPage = window.location.pathname;
-
   return (
     <div className="w-96 flex flex-col items-center ">
       <div className="w-[90vw] mb-5">
         <div className="flex flex-col items-center bg-white/10 rounded-t-xl">
           <p className="text-white opacity-50 text-xs px-5 pt-3 self-start">
             <Moment locale="fr" format="LL">
-              {event.data.date}
+              {data.date}
             </Moment>
           </p>
-          <h3 className="text-yellow-300 self-end px-5 pb-3">
-            {event.data.title}
-          </h3>
+          <h3 className="text-yellow-300 self-end px-5 pb-3">{data.title}</h3>
         </div>
         <div className="bg-white/5 px-5 rounded-b-xl shadow-xl">
           <p className="text-white opacity-50 text-xs pt-2">
-            {event.data.description}
+            {data.description}
           </p>
           <div className="flex justify-between pt-10 pb-2">
             <p className="text-white opacity-70 text-xs">A quel endroit ?</p>
-            <p className="text-white opacity-70 text-xs">{event.data.site}</p>
+            <p className="text-white opacity-70 text-xs">{data.site}</p>
           </div>
           {user && currentPage !== "/" && (
             <div className="flex gap-2 justify-end pt-4 pb-2">
@@ -102,7 +94,6 @@ const cardEvent = (event) => {
           contentLabel="Example Modal"
         >
           <h2>Modifier un évènement</h2>
-
           <div className="mb-5">
             <label htmlFor="title" className="font-bold text-slate-700">
               Titre
@@ -175,7 +166,6 @@ const cardEvent = (event) => {
           >
             Sauvegarder
           </button>
-
           <button type="button" onClick={closeModal}>
             close
           </button>
@@ -183,6 +173,6 @@ const cardEvent = (event) => {
       </div>
     </div>
   );
-};
+}
 
-export default cardEvent;
+export default CardEvent;

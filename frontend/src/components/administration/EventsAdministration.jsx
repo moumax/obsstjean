@@ -1,6 +1,6 @@
 import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import Moment from "moment";
@@ -21,14 +21,6 @@ export default function EventsAdministration() {
   const [site, setSite] = useState("");
   const [userId, setUserId] = useState(0);
 
-  const openModalAdd = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
   const fetcherEvent = async () => {
     const response = await axiosAPI.get("http://localhost:5000/api/events");
     const sortedEvents = response.data.sort(
@@ -37,10 +29,16 @@ export default function EventsAdministration() {
     setEvent(sortedEvents);
     return sortedEvents;
   };
-  const { data } = useSWR("events", fetcherEvent);
+  const { data, mutate } = useSWR("events", fetcherEvent);
   if (!data) return <h2>Loading...</h2>;
 
-  const { mutate } = useSWRConfig();
+  const openModalAdd = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   const createEvent = async (e) => {
     e.preventDefault();
@@ -53,9 +51,9 @@ export default function EventsAdministration() {
         site,
         userId,
       });
-      mutate("events");
       closeModal();
       toast.success("Nouvel évènement crée avec succès");
+      mutate("events");
     } catch (error) {
       if (!title) {
         toast.error('Le champ "Titre" est vide !');

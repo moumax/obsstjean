@@ -7,10 +7,10 @@ import axiosAPI from "../../services/axiosAPI";
 import editUser from "../../assets/administration/editUser.svg";
 import deleteUserSvg from "../../assets/administration/deleteUser.svg";
 
-const cardUser = (user) => {
+function CardUser({ data }) {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [email, setEmail] = useState(user.data.email);
-  const [password, setPassword] = useState(user.data.password_hash);
+  const [email, setEmail] = useState(data.email);
+  const [password, setPassword] = useState(data.password_hash);
   const { mutate } = useSWRConfig();
 
   const openModalModify = () => {
@@ -24,7 +24,7 @@ const cardUser = (user) => {
   const modifyUser = async (e) => {
     e.preventDefault();
     try {
-      await axiosAPI.put(`http://localhost:5000/api/users/${user.data.id}`, {
+      await axiosAPI.put(`http://localhost:5000/api/users/${data.id}`, {
         email,
         password_hash: password,
       });
@@ -37,9 +37,9 @@ const cardUser = (user) => {
   };
 
   const deleteUser = async () => {
-    await axiosAPI.delete(`http://localhost:5000/api/users/${user.data.id}`);
+    await axiosAPI.delete(`http://localhost:5000/api/users/${data.id}`);
     mutate("users");
-    toast.success(`L'utilisateur ${user.data.email} a été supprimé`);
+    toast.success(`L'utilisateur ${data.email} a été supprimé`);
   };
 
   const currentPage = window.location.pathname;
@@ -51,13 +51,13 @@ const cardUser = (user) => {
           <div>
             <p className="text-white">Email :</p>
             <h3 className="text-white opacity-70 text-sm pl-3">
-              {user.data.email}
+              {data.data.email}
             </h3>
             <p className="text-white">Role :</p>
             <h3 className="text-white opacity-70 text-sm pl-3">A définir</h3>
           </div>
           <div className="self-center">
-            {user && currentPage !== "/" && (
+            {data && currentPage !== "/" && (
               <div className="flex gap-2 justify-end pt-4">
                 <button type="submit" onClick={() => openModalModify()}>
                   <img
@@ -127,6 +127,6 @@ const cardUser = (user) => {
       </div>
     </div>
   );
-};
+}
 
-export default cardUser;
+export default CardUser;
