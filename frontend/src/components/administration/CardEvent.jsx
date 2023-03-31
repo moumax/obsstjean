@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 import axiosAPI from "../../services/axiosAPI";
 import CurrentUserContext from "../../contexts/userContext";
 
-import editButton from "../../assets/administration/edit.svg";
-import deleteButton from "../../assets/administration/delete.svg";
+import editEvent from "../../assets/administration/editEvent.svg";
+import eraseEvent from "../../assets/administration/deleteEvent.svg";
 
 const cardEvent = (event) => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -76,11 +76,11 @@ const cardEvent = (event) => {
             <p className="text-white opacity-70 text-xs">{event.data.site}</p>
           </div>
           {user && currentPage !== "/" && (
-            <div className="flex gap-2 justify-end pt-4">
+            <div className="flex gap-2 justify-end pt-4 pb-2">
               <button type="submit" onClick={() => openModalModify()}>
                 <img
                   className="w-[8vw]"
-                  src={editButton}
+                  src={editEvent}
                   alt="Editer un évènement"
                 />
                 <span />
@@ -90,7 +90,7 @@ const cardEvent = (event) => {
                 onClick={() => deleteEvent()}
                 className="w-[8vw]"
               >
-                <img src={deleteButton} alt="Supprimer un évènement" />
+                <img src={eraseEvent} alt="Supprimer un évènement" />
                 <span />
               </button>
             </div>

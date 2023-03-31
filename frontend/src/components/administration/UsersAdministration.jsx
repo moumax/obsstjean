@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { toast } from "react-toastify";
 import useSWR, { useSWRConfig } from "swr";
 import CardUser from "./CardUser";
-import Button from "../assets/Button";
+import addUser from "../../assets/administration/addUser.svg";
 import axiosAPI from "../../services/axiosAPI";
 
 Modal.setAppElement("#root");
@@ -55,11 +55,14 @@ export default function UsersAdministration() {
     <section className="w-[90vw] mt-10 flex flex-col items-center">
       <h2 className="text-2xl text-white font-exo2">Liste des utilisateurs</h2>
       <div className="flex self-end py-4">
-        <Button
-          label="Créer un utilisateur"
-          bgprimary="bg-green-600"
-          onClick={() => openModalAdd()}
-        />
+        <button
+          className="self-end pt-6 pb-6"
+          type="button"
+          onClick={openModalAdd}
+        >
+          <img className="w-[15vw]" src={addUser} alt="add an event" />
+          <span />
+        </button>
       </div>
       <Modal
         isOpen={modalIsOpen}
