@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 // eslint-disable-next-line no-unused-vars
 import useSWR from "swr";
 import Modal from "react-modal";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Moment from "moment";
 import CardEvent from "./CardEvent";
 import axiosAPI from "../../services/axiosAPI";
+import CurrentUserContext from "../../contexts/userContext";
 // import Button from "../assets/Button";
 
 import addEvent from "../../assets/administration/addEvent.svg";
@@ -19,6 +20,7 @@ export default function EventsAdministration() {
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [site, setSite] = useState("");
+  const { user } = useContext(CurrentUserContext);
   const [userId, setUserId] = useState(0);
 
   const fetcherEvent = async () => {
@@ -32,7 +34,16 @@ export default function EventsAdministration() {
   const { data, mutate } = useSWR("events", fetcherEvent);
   if (!data) return <h2>Loading...</h2>;
 
+  const currentUserId = async () => {
+    const res = await axiosAPI.get("http://localhost:5000/api/users");
+    res.data.map((result) =>
+      result.email === user.email ? setUserId(result.id) : null
+    );
+    return res;
+  };
+
   const openModalAdd = () => {
+    currentUserId();
     setIsOpen(true);
   };
 
@@ -144,19 +155,6 @@ export default function EventsAdministration() {
             placeholder="Site"
             value={site}
             onChange={(e) => setSite(e.target.value)}
-          />
-        </div>
-        <div className="mb-5">
-          <label htmlFor="userId" className="font-bold text-slate-700">
-            Id utilisateur
-          </label>
-          <input
-            id="userId"
-            type="text"
-            className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-            placeholder="Id utilisateur"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
           />
         </div>
         <button
