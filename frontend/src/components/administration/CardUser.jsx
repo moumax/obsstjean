@@ -50,9 +50,7 @@ function CardUser({ data }) {
         <div className=" w-full flex justify-between">
           <div>
             <p className="text-white">Email :</p>
-            <h3 className="text-white opacity-70 text-sm pl-3">
-              {data.data.email}
-            </h3>
+            <h3 className="text-white opacity-70 text-sm pl-3">{data.email}</h3>
             <p className="text-white">Role :</p>
             <h3 className="text-white opacity-70 text-sm pl-3">A définir</h3>
           </div>
