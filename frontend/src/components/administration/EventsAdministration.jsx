@@ -8,7 +8,7 @@ import CardEvent from "./CardEvent";
 import axiosAPI from "../../services/axiosAPI";
 // import Button from "../assets/Button";
 
-import addButton from "../../assets/administration/add.svg";
+import addEvent from "../../assets/administration/addEvent.svg";
 
 Modal.setAppElement("#root");
 
@@ -85,7 +85,7 @@ export default function EventsAdministration() {
         type="button"
         onClick={openModalAdd}
       >
-        <img className="w-[15vw]" src={addButton} alt="add an event" />
+        <img className="w-[15vw]" src={addEvent} alt="add an event" />
         <span />
       </button>
 
