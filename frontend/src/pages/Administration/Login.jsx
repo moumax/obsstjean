@@ -18,7 +18,7 @@ export default function Login() {
     e.preventDefault();
 
     if (email && pass) {
-      axiosAPI
+      await axiosAPI
         .post("http://localhost:5000/api/auth/login", {
           email,
           pass,
@@ -69,7 +69,7 @@ export default function Login() {
               label="Login"
               type="submit"
               bgprimary="bg-blue-600"
-              onClick={() => handleSubmit()}
+              onClick={(e) => handleSubmit(e)}
             />
           </div>
         </form>
