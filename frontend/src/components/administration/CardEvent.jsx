@@ -4,7 +4,7 @@ import { useSWRConfig } from "swr";
 import Moment from "react-moment";
 import "moment/locale/fr";
 import { toast } from "react-toastify";
-import eventAPI from "../../services/axiosAPI";
+import axiosAPI from "../../services/axiosAPI";
 import CurrentUserContext from "../../contexts/userContext";
 
 import editButton from "../../assets/administration/edit.svg";
@@ -31,7 +31,7 @@ const cardEvent = (event) => {
   const modifyEvent = async (e) => {
     e.preventDefault();
     try {
-      await eventAPI.put(`http://localhost:5000/api/events/${event.data.id}`, {
+      await axiosAPI.put(`http://localhost:5000/api/events/${event.data.id}`, {
         title,
         description,
         date,
@@ -47,7 +47,7 @@ const cardEvent = (event) => {
   };
 
   const deleteEvent = async () => {
-    await eventAPI.delete(`http://localhost:5000/api/events/${event.data.id}`);
+    await axiosAPI.delete(`http://localhost:5000/api/events/${event.data.id}`);
     mutate("events");
     toast.success(`L'évènement ${event.data.title} a été supprimé`);
   };
