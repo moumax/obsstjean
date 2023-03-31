@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
-import useSWR, { useSWRConfig } from "swr";
+import useSWR from "swr";
 import CardUser from "./CardUser";
 import addUser from "../../assets/administration/addUser.svg";
 import axiosAPI from "../../services/axiosAPI";
@@ -27,10 +27,8 @@ export default function UsersAdministration() {
     setUser(response.data);
     return response.data;
   };
-  const { data } = useSWR("users", fetcherUser);
+  const { data, mutate } = useSWR("users", fetcherUser);
   if (!data) return <h2>Loading...</h2>;
-
-  const { mutate } = useSWRConfig();
 
   const createUser = async (e) => {
     e.preventDefault();

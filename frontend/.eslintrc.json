@@ -15,8 +15,9 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "import"],
+  "plugins": ["react", "import", "react-hooks"],
   "rules": {
+    "react-hooks/rules-of-hooks": "error",
     "no-console": "off",
     "no-restricted-syntax": [
       "error",
