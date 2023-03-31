@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import useSWR, { useSWRConfig } from "swr";
-import eventAPI from "../../services/axiosAPI";
+import axiosAPI from "../../services/axiosAPI";
 import CardEvent from "../administration/CardEvent";
 
 export default function EventsList() {
   const fetcher = async () => {
-    const response = await eventAPI.get("http://localhost:5000/api/events");
+    const response = await axiosAPI.get("http://localhost:5000/api/events");
     const sortedEvents = response.data.sort(
       (a, b) => new Date(a.date) - new Date(b.date)
     );
