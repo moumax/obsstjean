@@ -14,6 +14,8 @@ export default function Administration() {
       <div className="self-end py-4">
         <Button
           label="Retour"
+          paddingX="px-1"
+          paddingY="py-2"
           bgprimary="bg-blue-600"
           onClick={() => navigate("/")}
         />

@@ -37,6 +37,8 @@ export default function EnterPoint() {
             <Button
               label="Administration"
               bgprimary="bg-blue-600"
+              paddingX="px-1"
+              paddingY="py-2"
               onClick={() => navigate("/administration")}
             />
           )}
@@ -44,6 +46,8 @@ export default function EnterPoint() {
             <Button
               label="Logout"
               bgprimary="bg-red-600"
+              paddingX="px-1"
+              paddingY="py-2"
               onClick={() => {
                 handleDisconnect();
               }}
@@ -53,6 +57,8 @@ export default function EnterPoint() {
             <Button
               label="Login"
               bgprimary="bg-blue-600"
+              paddingX="px-1"
+              paddingY="py-2"
               onClick={() => navigate("/login")}
             />
           )}

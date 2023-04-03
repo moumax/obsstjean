@@ -68,8 +68,18 @@ export default function Login() {
             <Button
               label="Login"
               type="submit"
-              bgprimary="bg-blue-600"
+              bgprimary="bg-green-600"
+              paddingX="px-1"
+              paddingY="py-2"
               onClick={(e) => handleSubmit(e)}
+            />
+            <Button
+              label="Retour"
+              type="submit"
+              bgprimary="bg-blue-600"
+              paddingX="px-1"
+              paddingY="py-2"
+              onClick={() => navigate("/")}
             />
           </div>
         </form>
