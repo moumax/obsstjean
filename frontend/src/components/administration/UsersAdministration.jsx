@@ -13,6 +13,7 @@ export default function UsersAdministration() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
 
   const openModalAdd = () => {
     setIsOpen(true);
@@ -36,6 +37,7 @@ export default function UsersAdministration() {
       await axiosAPI.post("http://localhost:5000/api/users", {
         email,
         password_hash: password,
+        role,
       });
       mutate("users");
       closeModal();
@@ -47,8 +49,12 @@ export default function UsersAdministration() {
       if (!password) {
         toast.error('Le champ "password" est vide !');
       }
+      if (!role) {
+        toast.error('Le champ "role" est vide');
+      }
     }
   };
+
   return (
     <section className="w-[90vw] mt-10 flex flex-col items-center">
       <h2 className="text-2xl text-white font-exo2">Liste des utilisateurs</h2>
@@ -94,6 +100,23 @@ export default function UsersAdministration() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+        </div>
+        <div className="mb-5">
+          <label htmlFor="role-select" className="font-bold text-slate-700">
+            Choisissez un rôle:
+          </label>
+
+          <select
+            name="roles"
+            id="role-select"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value="">--Liste--</option>
+            <option value="administrateur">administrateur</option>
+            <option value="redacteur">redacteur</option>
+            <option value="photographe">photographe</option>
+          </select>
         </div>
 
         <button
