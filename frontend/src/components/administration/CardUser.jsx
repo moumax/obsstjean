@@ -52,7 +52,7 @@ function CardUser({ data }) {
             <p className="text-white">Email :</p>
             <h3 className="text-white opacity-70 text-sm pl-3">{data.email}</h3>
             <p className="text-white">Role :</p>
-            <h3 className="text-white opacity-70 text-sm pl-3">A définir</h3>
+            <h3 className="text-white opacity-70 text-sm pl-3">{data.role}</h3>
           </div>
           <div className="self-center">
             {data && currentPage !== "/" && (
