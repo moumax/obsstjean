@@ -28,10 +28,11 @@ const getUserById = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
-  const { email, password_hash } = req.body;
+  const { email, password_hash, role } = req.body;
   const validate = validateUser({
     email,
     password_hash,
+    role,
   });
   if (validate) {
     res.status(422).json({ validate });
@@ -42,6 +43,7 @@ const createUser = async (req, res) => {
         data: {
           email,
           password_hash: hashed,
+          role,
         },
       });
       res.status(201).json(user);
@@ -52,10 +54,11 @@ const createUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { email, password_hash } = req.body;
+  const { email, password_hash, role } = req.body;
   const validate = validateUser({
     email,
     password_hash,
+    role,
   });
   if (validate) {
     res.status(422).json({ validate });
@@ -67,6 +70,7 @@ const updateUser = async (req, res) => {
         data: {
           email,
           password_hash: hashed,
+          role,
         },
       });
       res.status(200).json(user);
