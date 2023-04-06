@@ -1,42 +1,46 @@
-## Concept
+## Installation du projet
 
-This template is meant to serve as a foundation for every P2/P3 following the React-Express-MySQL stack, as learned in Wild Code School.
-It's pre-configured with a set of tools which'll help students produce industry-quality and easier-to-maintain code, while staying as simple as possible to use.
+Procedure d'intallation pour ce projet
 
 ## Setup & Use
 
-### Project Initialization
+### Initialisation du projet
 
-- In VSCode, install plugins **Prettier - Code formatter** and **ESLint** and configure them
-- Clone this repo, enter it
-- If you are using `yarn` or `pnpm`, adapt the `config/cli` in `package.json`
+- Dans VSCode, installer les plugins **Prettier - Code formatter** et **ESLint** et les configurer
+- Cloner ce repo
 - Run command `npm install`
-- _NB: To launch the backend server, you'll need an environment file with database credentials. You'll find a template one in `backend/.env.sample`_
+- Pour installer le server backend, créer un fichier .env avec les informations de la base de données. Un template existe (.env.sample)
 
-### Available Commands
+### Initialisation de la base de données
 
-- `migrate` : Run the database migration script
-- `dev` : Starts both servers (frontend + backend) in one terminal
-- `dev-front` : Starts the React frontend server
-- `dev-back` : Starts the Express backend server
-- `lint` : Runs validation tools, and refuses unclean code (will be executed on every _commit_)
-- `fix` : Fixes linter errors (run it if `lint` growls on your code !)
+- Sur le terminal dans le dossier backend du projet :
+```` bash
+npx prisma migrate dev --name init
+````
 
-## FAQ
+### Commandes disponibles
 
-### Tools
+- `migrate` : Démarre le script de migration de la base de données
+- `dev` : Démarre les servers frontend et backend
+- `dev-front` : Démarre le serveur frontend
+- `dev-back` : Démarre le serveur backend
+- `lint` : Démarre le script de validation eslint. Il sera démarré à chaque commits automatiquement
+- `fix` : Fix les erreurs de lint
 
-- _Concurrently_ : Allows for several commands to run concurrently in the same CLI
-- _Husky_ : Allows to execute specific commands that trigger on _git_ events
-- _Vite_ : Alternative to _Create-React-App_, packaging less tools for a more fluid experience
-- _ESLint_ : "Quality of code" tool, ensures chosen rules will be enforced
-- _Prettier_ : "Quality of code" tool as well, focuses on the styleguide
-- _ Airbnb Standard_ : One of the most known "standards", even though it's not officially linked to ES/JS
-- _Nodemon_ : Allows to restart the server everytime a .js file is udated
+### Outils utilisés pour ce projet
+
+- _Concurrently_ : Permet à certaines commandes de s'éxécuter de manière concurrentes avec le même CLI
+- _Husky_ : Permet d'éxécuter des commandes à chaque évènement Git
+- _Vite_ : Module bundler qui remplace CRA
+- _ESLint_ : Outil pour la qualité du code
+- _Prettier_ : Outil pour la qualité du code
+- _ Airbnb Standard_ : Permet d'avoir un standard pour la qualité du code
+- _Nodemon_ : Permet le rafraichissement du code Js sans avoir à redémarrer le serveur à chaque modification
+- _prima_: Outil de création de base de données 
 
 ### Deployment
 
-For deployment, you have to go to `secrets` → app `actions` on the github repo to insert via `New repository secret` :
+Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo github "New repository secret"
 
 - CAPROVER_BACK_APPNAME : name app on caprover
 - CAPROVER_FRONT_APPNAME : name app on caprover
