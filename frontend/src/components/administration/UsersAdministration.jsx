@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import useSWR from "swr";
+import usersReducer from "../../reducers/usersReducer";
 import CardUser from "./CardUser";
 import addUser from "../../assets/administration/addUser.svg";
 import axiosAPI from "../../services/axiosAPI";
@@ -11,9 +12,17 @@ Modal.setAppElement("#root");
 export default function UsersAdministration() {
   const [user, setUser] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [role, setRole] = useState("");
+
+  const initialState = {
+    email: "",
+    password: "",
+    role: "",
+  };
+
+  const [userForm, userFormDispatch] = useReducer(usersReducer, initialState);
 
   const openModalAdd = () => {
     setIsOpen(true);
@@ -35,21 +44,21 @@ export default function UsersAdministration() {
     e.preventDefault();
     try {
       await axiosAPI.post("http://localhost:5000/api/users", {
-        email,
-        password_hash: password,
-        role,
+        email: userForm.email,
+        password_hash: userForm.password,
+        role: userForm.role,
       });
       mutate("users");
       closeModal();
       toast.success("Nouvel utilisateur crée avec succès");
     } catch (error) {
-      if (!email) {
+      if (!userForm.email) {
         toast.error('Le champ "Email" est vide !');
       }
-      if (!password) {
+      if (!userForm.password) {
         toast.error('Le champ "password" est vide !');
       }
-      if (!role) {
+      if (!userForm.role) {
         toast.error('Le champ "role" est vide');
       }
     }
@@ -84,8 +93,13 @@ export default function UsersAdministration() {
             type="text"
             className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
             placeholder="Email de l'utilisateur"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={userForm.email}
+            onChange={(e) =>
+              userFormDispatch({
+                type: "VOID_EMAIL",
+                payload: e.target.value,
+              })
+            }
           />
         </div>
         <div className="mb-5">
@@ -97,8 +111,13 @@ export default function UsersAdministration() {
             type="password"
             className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
             placeholder="Mot de passe"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={userForm.password}
+            onChange={(e) =>
+              userFormDispatch({
+                type: "VOID_PASSWORD",
+                payload: e.target.value,
+              })
+            }
           />
         </div>
         <div className="mb-5">
@@ -109,8 +128,13 @@ export default function UsersAdministration() {
           <select
             name="roles"
             id="role-select"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
+            value={userForm.role}
+            onChange={(e) =>
+              userFormDispatch({
+                type: "VOID_ROLE",
+                payload: e.target.value,
+              })
+            }
           >
             <option value="">--Liste--</option>
             <option value="administrateur">administrateur</option>

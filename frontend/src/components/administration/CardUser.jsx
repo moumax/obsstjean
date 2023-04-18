@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import Modal from "react-modal";
 import { useSWRConfig } from "swr";
 import { toast } from "react-toastify";
+import usersReducer from "../../reducers/usersReducer";
 import axiosAPI from "../../services/axiosAPI";
 
 import editUser from "../../assets/administration/editUser.svg";
@@ -9,9 +10,15 @@ import deleteUserSvg from "../../assets/administration/deleteUser.svg";
 
 function CardUser({ data }) {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [email, setEmail] = useState(data.email);
-  const [password, setPassword] = useState(data.password_hash);
   const { mutate } = useSWRConfig();
+
+  const initialState = {
+    email: data.email,
+    password: data.password_hash,
+    role: data.role,
+  };
+
+  const [userForm, userFormDispatch] = useReducer(usersReducer, initialState);
 
   const openModalModify = () => {
     setIsOpen(true);
@@ -25,8 +32,9 @@ function CardUser({ data }) {
     e.preventDefault();
     try {
       await axiosAPI.put(`http://localhost:5000/api/users/${data.id}`, {
-        email,
-        password_hash: password,
+        email: userForm.email,
+        password_hash: userForm.password,
+        role: userForm.role,
       });
       mutate("users");
       closeModal();
@@ -93,8 +101,13 @@ function CardUser({ data }) {
               type="text"
               className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={userForm.email}
+              onChange={(e) =>
+                userFormDispatch({
+                  type: "EMAIL",
+                  payload: e.target.value,
+                })
+              }
             />
           </div>
           <div className="mb-5">
@@ -106,8 +119,13 @@ function CardUser({ data }) {
               type="password"
               className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={userForm.password}
+              onChange={(e) =>
+                userFormDispatch({
+                  type: "PASSWORD",
+                  payload: e.target.value,
+                })
+              }
             />
           </div>
           <button
