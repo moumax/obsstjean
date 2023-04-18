@@ -1,9 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useReducer } from "react";
 import Modal from "react-modal";
 import { useSWRConfig } from "swr";
 import Moment from "react-moment";
 import "moment/locale/fr";
 import { toast } from "react-toastify";
+import eventsReducer from "../../reducers/eventsReducer";
 import axiosAPI from "../../services/axiosAPI";
 import CurrentUserContext from "../../contexts/userContext";
 
@@ -12,10 +13,18 @@ import eraseEvent from "../../assets/administration/deleteEvent.svg";
 
 function CardEvent({ data }) {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState(data.title);
-  const [description, setDescription] = useState(data.description);
-  const [date, setDate] = useState(data.date);
-  const [site, setSite] = useState(data.site);
+
+  const initialState = {
+    title: data.title,
+    description: data.description,
+    site: data.site,
+    date: data.date,
+  };
+
+  const [eventForm, eventFormDispatch] = useReducer(
+    eventsReducer,
+    initialState
+  );
   const [userId, setUserId] = useState(data.userId);
   const { user } = useContext(CurrentUserContext);
   const { mutate } = useSWRConfig();
@@ -29,10 +38,10 @@ function CardEvent({ data }) {
     e.preventDefault();
     try {
       await axiosAPI.put(`http://localhost:5000/api/events/${data.id}`, {
-        title,
-        description,
-        date,
-        site,
+        title: eventForm.title,
+        description: eventForm.description,
+        date: eventForm.date,
+        site: eventForm.site,
         userId,
       });
       mutate("events");
@@ -104,8 +113,13 @@ function CardEvent({ data }) {
               type="text"
               className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Titre"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={eventForm.title}
+              onChange={(e) =>
+                eventFormDispatch({
+                  type: "TITLE",
+                  payload: e.target.value,
+                })
+              }
             />
           </div>
           <div className="mb-5">
@@ -117,8 +131,13 @@ function CardEvent({ data }) {
               type="text"
               className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              value={eventForm.description}
+              onChange={(e) =>
+                eventFormDispatch({
+                  type: "DESCRIPTION",
+                  payload: e.target.value,
+                })
+              }
             />
           </div>
           <div className="mb-5">
@@ -130,8 +149,13 @@ function CardEvent({ data }) {
               type="text"
               className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+              value={eventForm.date}
+              onChange={(e) =>
+                eventFormDispatch({
+                  type: "DATE",
+                  payload: e.target.value,
+                })
+              }
             />
           </div>
           <div className="mb-5">
@@ -143,8 +167,13 @@ function CardEvent({ data }) {
               type="text"
               className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Site"
-              value={site}
-              onChange={(e) => setSite(e.target.value)}
+              value={eventForm.site}
+              onChange={(e) =>
+                eventFormDispatch({
+                  type: "SITE",
+                  payload: e.target.value,
+                })
+              }
             />
           </div>
           <div className="mb-5">
