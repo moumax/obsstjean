@@ -46,3 +46,12 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 - CAPROVER_FRONT_APPNAME : name app on caprover
 - CAPROVER_PASSWORD : password caprover
 - CAPROVER_SERVER : link of domain
+
+### A fixer
+
+-[] Enpêcher le scroll sur l'arrière plan lorsqu'une modale est ouverte.
+
+-[] Dans la modale création Event, augmenter la hauteur de la descrition et faire en sorte qu'il y ai un retour à la ligne.
+
+-[] Lors de la modification d'un event, le userId doit correspondre au user connecté qui modifie l'event
+

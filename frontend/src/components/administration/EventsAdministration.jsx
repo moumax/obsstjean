@@ -1,27 +1,37 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useReducer } from "react";
 // eslint-disable-next-line no-unused-vars
 import useSWR from "swr";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import Moment from "moment";
+import eventsReducer from "../../reducers/eventsReducer";
 import CardEvent from "./CardEvent";
 import axiosAPI from "../../services/axiosAPI";
 import CurrentUserContext from "../../contexts/userContext";
 // import Button from "../assets/Button";
 
 import addEvent from "../../assets/administration/addEvent.svg";
+import Button from "../assets/Button";
 
 Modal.setAppElement("#root");
 
 export default function EventsAdministration() {
   const [event, setEvent] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [site, setSite] = useState("");
   const { user } = useContext(CurrentUserContext);
   const [userId, setUserId] = useState(0);
+
+  const initialState = {
+    title: "",
+    description: "",
+    site: "",
+    date: "",
+  };
+
+  const [eventForm, eventFormDispatch] = useReducer(
+    eventsReducer,
+    initialState
+  );
 
   const fetcherEvent = async () => {
     const response = await axiosAPI.get("http://localhost:5000/api/events");
@@ -53,35 +63,46 @@ export default function EventsAdministration() {
 
   const createEvent = async (e) => {
     e.preventDefault();
-    const newDate = Moment(date).toISOString();
     try {
       await axiosAPI.post("http://localhost:5000/api/events", {
-        title,
-        description,
-        date: newDate,
-        site,
+        title: eventForm.title,
+        description: eventForm.description,
+        date: Moment(eventForm.date).toISOString(),
+        site: eventForm.site,
         userId,
       });
       closeModal();
       toast.success("Nouvel évènement crée avec succès");
       mutate("events");
     } catch (error) {
-      if (!title) {
+      if (!eventForm.title) {
         toast.error('Le champ "Titre" est vide !');
       }
-      if (!description) {
+      if (!eventForm.description) {
         toast.error('Le champ "description" est vide !');
       }
-      if (!date) {
+      if (!eventForm.date) {
         toast.error('Le champ "Date" est vide !');
       }
-      if (!site) {
+      if (!eventForm.site) {
         toast.error('Le champ "Site" est vide !');
       }
       if (!userId) {
         toast.error('Le champ "UserId" est vide !');
       }
     }
+  };
+
+  const modalStyle = {
+    overlay: {
+      backgroundColor: "rgba(255, 255, 255, 0.50)",
+      overflow: "hidden",
+    },
+    content: {
+      borderRadius: "20px",
+      backgroundColor: "rgba(7, 35, 72, 0.90)",
+      border: "none",
+    },
   };
 
   return (
@@ -102,11 +123,12 @@ export default function EventsAdministration() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
+        style={modalStyle}
       >
-        <h2>Ajouter un event</h2>
+        <h2 className="text-center text-white text-2xl">Ajouter un event</h2>
 
-        <div className="mb-5">
-          <label htmlFor="title" className="font-bold text-slate-700">
+        <div className="m-1 mt-5">
+          <label htmlFor="title" className="font-bold text-slate-300">
             Titre
           </label>
           <input
@@ -114,12 +136,17 @@ export default function EventsAdministration() {
             type="text"
             className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
             placeholder="Titre"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={eventForm.title}
+            onChange={(e) =>
+              eventFormDispatch({
+                type: "VOID_TITLE",
+                payload: e.target.value,
+              })
+            }
           />
         </div>
-        <div className="mb-5">
-          <label htmlFor="description" className="font-bold text-slate-700">
+        <div className="m-1">
+          <label htmlFor="description" className="font-bold text-slate-300">
             Description
           </label>
           <input
@@ -127,12 +154,17 @@ export default function EventsAdministration() {
             type="text"
             className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
             placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={eventForm.description}
+            onChange={(e) =>
+              eventFormDispatch({
+                type: "VOID_DESCRIPTION",
+                payload: e.target.value,
+              })
+            }
           />
         </div>
-        <div className="mb-5">
-          <label htmlFor="date" className="font-bold text-slate-700">
+        <div className="m-1">
+          <label htmlFor="date" className="font-bold text-slate-300">
             Date
           </label>
           <input
@@ -140,12 +172,17 @@ export default function EventsAdministration() {
             type="date"
             className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
             placeholder="Date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            value={eventForm.date}
+            onChange={(e) =>
+              eventFormDispatch({
+                type: "VOID_DATE",
+                payload: e.target.value,
+              })
+            }
           />
         </div>
-        <div className="mb-5">
-          <label htmlFor="site" className="font-bold text-slate-700">
+        <div className="m-1">
+          <label htmlFor="site" className="font-bold text-slate-300">
             Site
           </label>
           <input
@@ -153,21 +190,30 @@ export default function EventsAdministration() {
             type="text"
             className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
             placeholder="Site"
-            value={site}
-            onChange={(e) => setSite(e.target.value)}
+            value={eventForm.site}
+            onChange={(e) =>
+              eventFormDispatch({
+                type: "VOID_SITE",
+                payload: e.target.value,
+              })
+            }
           />
         </div>
-        <button
-          onClick={createEvent}
-          type="submit"
-          className="w-full py-3 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow"
-        >
-          Sauvegarder
-        </button>
+        <div className="flex flex-col mt-10 gap-5">
+          <Button
+            label="Sauvegarder"
+            bgprimary="bg-green-600"
+            onClick={createEvent}
+            height="h-10"
+          />
 
-        <button type="button" onClick={closeModal}>
-          close
-        </button>
+          <Button
+            label="Fermer"
+            bgprimary="bg-red-500"
+            onClick={closeModal}
+            height="h-10"
+          />
+        </div>
       </Modal>
 
       {event.map((events) => (

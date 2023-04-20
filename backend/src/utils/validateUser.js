@@ -5,6 +5,7 @@ exports.validateUser = (data, forCreation = true) => {
   const validationErrors = Joi.object({
     email: Joi.string().email().presence(presence),
     password_hash: Joi.string().max(500).presence(presence),
+    role: Joi.string().max(15).presence(presence),
   }).validate(data, { abortEarly: false }).error;
   if (validationErrors) {
     return validationErrors;
