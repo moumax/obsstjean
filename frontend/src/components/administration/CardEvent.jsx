@@ -10,6 +10,7 @@ import CurrentUserContext from "../../contexts/userContext";
 
 import editEvent from "../../assets/administration/editEvent.svg";
 import eraseEvent from "../../assets/administration/deleteEvent.svg";
+import Button from "../assets/Button";
 
 function CardEvent({ data }) {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -25,6 +26,7 @@ function CardEvent({ data }) {
     eventsReducer,
     initialState
   );
+  // eslint-disable-next-line no-unused-vars
   const [userId, setUserId] = useState(data.userId);
   const { user } = useContext(CurrentUserContext);
   const { mutate } = useSWRConfig();
@@ -34,8 +36,10 @@ function CardEvent({ data }) {
   const closeModal = () => {
     setIsOpen(false);
   };
+
   const modifyEvent = async (e) => {
     e.preventDefault();
+
     try {
       await axiosAPI.put(`http://localhost:5000/api/events/${data.id}`, {
         title: eventForm.title,
@@ -48,7 +52,21 @@ function CardEvent({ data }) {
       closeModal();
       toast.success("Evènement mis à jour avec succès");
     } catch (error) {
-      toast.error("Erreur dans le formulaire !!!");
+      if (!eventForm.title) {
+        toast.error('Le champ "Titre" est vide !');
+      }
+      if (!eventForm.description) {
+        toast.error('Le champ "description" est vide !');
+      }
+      if (!eventForm.date) {
+        toast.error('Le champ "Date" est vide !');
+      }
+      if (!eventForm.site) {
+        toast.error('Le champ "Site" est vide !');
+      }
+      if (!userId) {
+        toast.error('Le champ "UserId" est vide !');
+      }
     }
   };
   const deleteEvent = async () => {
@@ -58,6 +76,28 @@ function CardEvent({ data }) {
   };
 
   const currentPage = window.location.pathname;
+
+  const modalStyle = {
+    overlay: {
+      backgroundColor: "rgba(255, 255, 255, 0.50)",
+      overflow: "hidden",
+    },
+    content: {
+      borderRadius: "20px",
+      backgroundColor: "rgba(7, 35, 72, 0.90)",
+      border: "none",
+    },
+  };
+
+  const dateFunction = (e) => {
+    const date = new Date(e.target.value);
+
+    eventFormDispatch({
+      type: "DATE",
+      payload: date.toISOString(e.target.value),
+    });
+  };
+
   return (
     <div className="w-96 flex flex-col items-center ">
       <div className="w-[90vw] mb-5">
@@ -102,10 +142,13 @@ function CardEvent({ data }) {
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           contentLabel="Example Modal"
+          style={modalStyle}
         >
-          <h2>Modifier un évènement</h2>
-          <div className="mb-5">
-            <label htmlFor="title" className="font-bold text-slate-700">
+          <h2 className="text-center text-white text-2xl">
+            Modifier un évènement
+          </h2>
+          <div className="m-1 mt-5">
+            <label htmlFor="title" className="font-bold text-slate-300">
               Titre
             </label>
             <input
@@ -122,8 +165,8 @@ function CardEvent({ data }) {
               }
             />
           </div>
-          <div className="mb-5">
-            <label htmlFor="description" className="font-bold text-slate-700">
+          <div className="m-1">
+            <label htmlFor="description" className="font-bold text-slate-300">
               Description
             </label>
             <input
@@ -140,26 +183,21 @@ function CardEvent({ data }) {
               }
             />
           </div>
-          <div className="mb-5">
-            <label htmlFor="date" className="font-bold text-slate-700">
+          <div className="m-1">
+            <label htmlFor="date" className="font-bold text-slate-300">
               Date
             </label>
             <input
               id="date"
-              type="text"
+              type="date"
               className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-              placeholder="Date"
-              value={eventForm.date}
-              onChange={(e) =>
-                eventFormDispatch({
-                  type: "DATE",
-                  payload: e.target.value,
-                })
-              }
+              placeholder="date"
+              value={eventForm.date.slice(0, 10)}
+              onChange={dateFunction}
             />
           </div>
-          <div className="mb-5">
-            <label htmlFor="site" className="font-bold text-slate-700">
+          <div className="m-1">
+            <label htmlFor="site" className="font-bold text-slate-300">
               Site
             </label>
             <input
@@ -176,29 +214,21 @@ function CardEvent({ data }) {
               }
             />
           </div>
-          <div className="mb-5">
-            <label htmlFor="userId" className="font-bold text-slate-700">
-              Id utilisateur
-            </label>
-            <input
-              id="userId"
-              type="text"
-              className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
-              placeholder="Id utilisateur"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
+          <div className="flex flex-col mt-10 gap-5">
+            <Button
+              label="Sauvegarder"
+              bgprimary="bg-green-600"
+              onClick={modifyEvent}
+              height="h-10"
+            />
+
+            <Button
+              label="Fermer"
+              bgprimary="bg-red-500"
+              onClick={closeModal}
+              height="h-10"
             />
           </div>
-          <button
-            onClick={modifyEvent}
-            type="submit"
-            className="w-full py-3 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow"
-          >
-            Sauvegarder
-          </button>
-          <button type="button" onClick={closeModal}>
-            close
-          </button>
         </Modal>
       </div>
     </div>

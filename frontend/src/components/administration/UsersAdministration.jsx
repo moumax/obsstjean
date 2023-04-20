@@ -2,6 +2,7 @@ import { useReducer, useState } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import useSWR from "swr";
+import Button from "../assets/Button";
 import usersReducer from "../../reducers/usersReducer";
 import CardUser from "./CardUser";
 import addUser from "../../assets/administration/addUser.svg";
@@ -12,9 +13,6 @@ Modal.setAppElement("#root");
 export default function UsersAdministration() {
   const [user, setUser] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [role, setRole] = useState("");
 
   const initialState = {
     email: "",
@@ -64,6 +62,18 @@ export default function UsersAdministration() {
     }
   };
 
+  const modalStyle = {
+    overlay: {
+      backgroundColor: "rgba(255, 255, 255, 0.50)",
+      overflow: "hidden",
+    },
+    content: {
+      borderRadius: "20px",
+      backgroundColor: "rgba(7, 35, 72, 0.90)",
+      border: "none",
+    },
+  };
+
   return (
     <section className="w-[90vw] mt-10 flex flex-col items-center">
       <h2 className="text-2xl text-white font-exo2">Liste des utilisateurs</h2>
@@ -81,11 +91,15 @@ export default function UsersAdministration() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
+        // className="flex flex-col bg-transparent"
+        style={modalStyle}
       >
-        <h2>Ajouter un utilisateur</h2>
+        <h2 className="text-center text-white text-2xl">
+          Ajouter un utilisateur
+        </h2>
 
-        <div className="mb-5">
-          <label htmlFor="title" className="font-bold text-slate-700">
+        <div className="m-1 mt-5">
+          <label htmlFor="title" className="font-bold text-slate-300">
             Email
           </label>
           <input
@@ -102,8 +116,8 @@ export default function UsersAdministration() {
             }
           />
         </div>
-        <div className="mb-5">
-          <label htmlFor="password_hash" className="font-bold text-slate-700">
+        <div className="m-1">
+          <label htmlFor="password_hash" className="font-bold text-slate-300">
             Mot de passe
           </label>
           <input
@@ -120,13 +134,14 @@ export default function UsersAdministration() {
             }
           />
         </div>
-        <div className="mb-5">
-          <label htmlFor="role-select" className="font-bold text-slate-700">
+        <div className="flex flex-col m-1">
+          <label htmlFor="role-select" className="font-bold text-slate-300">
             Choisissez un rôle:
           </label>
 
           <select
             name="roles"
+            className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
             id="role-select"
             value={userForm.role}
             onChange={(e) =>
@@ -136,24 +151,28 @@ export default function UsersAdministration() {
               })
             }
           >
-            <option value="">--Liste--</option>
+            <option value=""> </option>
             <option value="administrateur">administrateur</option>
             <option value="redacteur">redacteur</option>
             <option value="photographe">photographe</option>
           </select>
         </div>
 
-        <button
-          onClick={createUser}
-          type="submit"
-          className="w-full py-3 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow"
-        >
-          Sauvegarder
-        </button>
+        <div className="flex flex-col mt-20 gap-5">
+          <Button
+            label="Sauvegarder"
+            bgprimary="bg-green-600"
+            onClick={createUser}
+            height="h-14"
+          />
 
-        <button type="button" onClick={closeModal}>
-          close
-        </button>
+          <Button
+            label="Fermer"
+            bgprimary="bg-red-500"
+            onClick={closeModal}
+            height="h-14"
+          />
+        </div>
       </Modal>
       {user.map((users) => (
         <div key={users.id}>
