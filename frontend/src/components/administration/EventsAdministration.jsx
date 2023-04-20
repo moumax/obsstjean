@@ -11,6 +11,7 @@ import CurrentUserContext from "../../contexts/userContext";
 // import Button from "../assets/Button";
 
 import addEvent from "../../assets/administration/addEvent.svg";
+import Button from "../assets/Button";
 
 Modal.setAppElement("#root");
 
@@ -62,12 +63,11 @@ export default function EventsAdministration() {
 
   const createEvent = async (e) => {
     e.preventDefault();
-    const newDate = Moment(eventForm.date).toISOString();
     try {
       await axiosAPI.post("http://localhost:5000/api/events", {
         title: eventForm.title,
         description: eventForm.description,
-        date: newDate,
+        date: Moment(eventForm.date).toISOString(),
         site: eventForm.site,
         userId,
       });
@@ -81,7 +81,7 @@ export default function EventsAdministration() {
       if (!eventForm.description) {
         toast.error('Le champ "description" est vide !');
       }
-      if (!newDate) {
+      if (!eventForm.date) {
         toast.error('Le champ "Date" est vide !');
       }
       if (!eventForm.site) {
@@ -91,6 +91,18 @@ export default function EventsAdministration() {
         toast.error('Le champ "UserId" est vide !');
       }
     }
+  };
+
+  const modalStyle = {
+    overlay: {
+      backgroundColor: "rgba(255, 255, 255, 0.50)",
+      overflow: "hidden",
+    },
+    content: {
+      borderRadius: "20px",
+      backgroundColor: "rgba(7, 35, 72, 0.90)",
+      border: "none",
+    },
   };
 
   return (
@@ -111,11 +123,12 @@ export default function EventsAdministration() {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
+        style={modalStyle}
       >
-        <h2>Ajouter un event</h2>
+        <h2 className="text-center text-white text-2xl">Ajouter un event</h2>
 
-        <div className="mb-5">
-          <label htmlFor="title" className="font-bold text-slate-700">
+        <div className="m-1 mt-5">
+          <label htmlFor="title" className="font-bold text-slate-300">
             Titre
           </label>
           <input
@@ -132,8 +145,8 @@ export default function EventsAdministration() {
             }
           />
         </div>
-        <div className="mb-5">
-          <label htmlFor="description" className="font-bold text-slate-700">
+        <div className="m-1">
+          <label htmlFor="description" className="font-bold text-slate-300">
             Description
           </label>
           <input
@@ -150,8 +163,8 @@ export default function EventsAdministration() {
             }
           />
         </div>
-        <div className="mb-5">
-          <label htmlFor="date" className="font-bold text-slate-700">
+        <div className="m-1">
+          <label htmlFor="date" className="font-bold text-slate-300">
             Date
           </label>
           <input
@@ -168,8 +181,8 @@ export default function EventsAdministration() {
             }
           />
         </div>
-        <div className="mb-5">
-          <label htmlFor="site" className="font-bold text-slate-700">
+        <div className="m-1">
+          <label htmlFor="site" className="font-bold text-slate-300">
             Site
           </label>
           <input
@@ -186,17 +199,21 @@ export default function EventsAdministration() {
             }
           />
         </div>
-        <button
-          onClick={createEvent}
-          type="submit"
-          className="w-full py-3 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow"
-        >
-          Sauvegarder
-        </button>
+        <div className="flex flex-col mt-10 gap-5">
+          <Button
+            label="Sauvegarder"
+            bgprimary="bg-green-600"
+            onClick={createEvent}
+            height="h-10"
+          />
 
-        <button type="button" onClick={closeModal}>
-          close
-        </button>
+          <Button
+            label="Fermer"
+            bgprimary="bg-red-500"
+            onClick={closeModal}
+            height="h-10"
+          />
+        </div>
       </Modal>
 
       {event.map((events) => (
