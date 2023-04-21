@@ -110,7 +110,7 @@ function CardEvent({ data }) {
           <h3 className="text-yellow-300 self-end px-5 pb-3">{data.title}</h3>
         </div>
         <div className="bg-white/5 px-5 rounded-b-xl shadow-xl">
-          <p className="text-white opacity-50 text-xs pt-2 break-words">
+          <p className="text-white opacity-50 text-xs pt-2 break-words text-justify">
             {data.description}
           </p>
           <div className="flex justify-between pt-10 pb-2">
@@ -172,7 +172,7 @@ function CardEvent({ data }) {
             <textarea
               id="description"
               type="text"
-              className="text-xs w-full h-40 py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+              className="text-xs text-justify w-full h-40 py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Description"
               value={eventForm.description}
               onChange={(e) =>
@@ -214,7 +214,7 @@ function CardEvent({ data }) {
               }
             />
           </div>
-          <div className="flex flex-col absolute bottom-0 right-0 items-center">
+          <div className="flex flex-row absolute bottom-3 right-0 justify-center w-full gap-2">
             <Button
               label="Sauvegarder"
               bgprimary="bg-green-600"
