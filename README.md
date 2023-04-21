@@ -57,3 +57,5 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[] Fix le bug de date avec un décallage d'une journée
 
+-[] Sur les events, mettre un liseré vert ou rouge selon la date
+
