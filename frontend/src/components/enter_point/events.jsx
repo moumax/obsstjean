@@ -6,9 +6,21 @@ import CardEvent from "../administration/CardEvent";
 export default function EventsList() {
   const fetcher = async () => {
     const response = await axiosAPI.get("http://localhost:5000/api/events");
-    const sortedEvents = response.data.sort(
-      (a, b) => new Date(a.date) - new Date(b.date)
-    );
+    const now = new Date();
+    const sortedEvents = response.data.sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      if (dateA < now && dateB < now) {
+        return dateA - dateB;
+      }
+      if (dateA < now) {
+        return 1;
+      }
+      if (dateB < now) {
+        return -1;
+      }
+      return dateA - dateB;
+    });
     return sortedEvents;
   };
   const { data } = useSWR("events", fetcher);

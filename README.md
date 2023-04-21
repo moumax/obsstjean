@@ -57,7 +57,9 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[] Fix le bug de date avec un décallage d'une journée
 
--[] Sur les events, mettre un liseré vert ou rouge selon la date
+-[x] Sur les events, mettre un liseré vert ou rouge selon la date
+
+-[x] Sur les events, si la date est passé, mettre l'evènement à la fin de la liste
 
 -[] Modal pour valider la suppression d'un event et d'un user
 
