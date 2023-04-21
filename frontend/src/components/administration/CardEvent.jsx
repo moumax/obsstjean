@@ -98,9 +98,18 @@ function CardEvent({ data }) {
     });
   };
 
+  const now = new Date();
+  const nowIso = now.toISOString();
+
   return (
     <div className="w-96 flex flex-col items-center ">
-      <div className="w-[90vw] mb-5">
+      <div
+        className={`w-[90vw] mb-5 rounded-xl ${
+          data.date < nowIso
+            ? "border border-opacity-40 border-red-500"
+            : "border border-opacity-40 border-green-500"
+        }`}
+      >
         <div className="flex flex-col items-center bg-white/10 rounded-t-xl">
           <p className="text-white opacity-50 text-xs px-5 pt-3 self-start">
             <Moment locale="fr" format="LL">

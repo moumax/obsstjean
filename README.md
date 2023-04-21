@@ -59,3 +59,5 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[] Sur les events, mettre un liseré vert ou rouge selon la date
 
+-[] Modal pour valider la suppression d'un event et d'un user
+
