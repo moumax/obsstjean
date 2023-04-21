@@ -7,9 +7,11 @@ import axiosAPI from "../../services/axiosAPI";
 
 import editUser from "../../assets/administration/editUser.svg";
 import deleteUserSvg from "../../assets/administration/deleteUser.svg";
+import Button from "../assets/Button";
 
 function CardUser({ data }) {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
   const { mutate } = useSWRConfig();
 
   const initialState = {
@@ -24,8 +26,16 @@ function CardUser({ data }) {
     setIsOpen(true);
   };
 
+  const openModalDelete = () => {
+    setModalDeleteIsOpen(true);
+  };
+
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const closeModalDelete = () => {
+    setModalDeleteIsOpen(false);
   };
 
   const modifyUser = async (e) => {
@@ -52,6 +62,18 @@ function CardUser({ data }) {
 
   const currentPage = window.location.pathname;
 
+  const modalStyle = {
+    overlay: {
+      backgroundColor: "rgba(255, 255, 255, 0.50)",
+      overflow: "hidden",
+    },
+    content: {
+      borderRadius: "20px",
+      backgroundColor: "rgba(7, 35, 72, 0.90)",
+      border: "none",
+    },
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div className="w-[90vw] mb-5 bg-white/10 rounded-xl p-5 font-exo2 shadow-xl">
@@ -75,7 +97,7 @@ function CardUser({ data }) {
                 </button>
                 <button
                   type="submit"
-                  onClick={() => deleteUser()}
+                  onClick={() => openModalDelete()}
                   className="w-[8vw]"
                 >
                   <img src={deleteUserSvg} alt="Supprimer un utilisateur" />
@@ -89,11 +111,14 @@ function CardUser({ data }) {
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           contentLabel="Example Modal"
+          style={modalStyle}
         >
-          <h2>Modifier un utilisateur</h2>
+          <h2 className="text-center text-white text-2xl">
+            Modifier un utilisateur
+          </h2>
 
-          <div className="mb-5">
-            <label htmlFor="email" className="font-bold text-slate-700">
+          <div className="m-1 mt-5">
+            <label htmlFor="email" className="font-bold text-slate-300">
               Email
             </label>
             <input
@@ -111,7 +136,7 @@ function CardUser({ data }) {
             />
           </div>
           <div className="mb-5">
-            <label htmlFor="password" className="font-bold text-slate-700">
+            <label htmlFor="password" className="font-bold text-slate-300">
               Mot de passe
             </label>
             <input
@@ -128,17 +153,57 @@ function CardUser({ data }) {
               }
             />
           </div>
-          <button
-            onClick={modifyUser}
-            type="submit"
-            className="w-full py-3 font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg border-indigo-500 hover:shadow"
-          >
-            Sauvegarder
-          </button>
+          <div className="flex flex-row absolute bottom-3 right-0 justify-between w-full px-4">
+            <Button
+              label="Modifier"
+              bgprimary="bg-red-600"
+              onClick={modifyUser}
+              height="h-10"
+            />
 
-          <button type="button" onClick={closeModal}>
-            close
-          </button>
+            <Button
+              label="Annuler"
+              bgprimary="bg-green-600"
+              onClick={closeModal}
+              height="h-10"
+            />
+          </div>
+        </Modal>
+        <Modal
+          isOpen={modalDeleteIsOpen}
+          onRequestClose={closeModalDelete}
+          contentLabel="Example Modal"
+          style={modalStyle}
+        >
+          <h2 className="text-center text-white text-2xl">
+            Supprimer cet utilisateur
+          </h2>
+
+          <div className="m-1 mt-5 flex flex-col">
+            <label htmlFor="email" className="font-bold text-slate-300">
+              Email :
+            </label>
+            <p className="text-white self-end">{userForm.email}</p>
+            <label htmlFor="role" className="font-bold text-slate-300">
+              Role :
+            </label>
+            <p className="text-white self-end">{userForm.role}</p>
+          </div>
+          <div className="flex flex-row absolute bottom-3 right-0 justify-between w-full px-4">
+            <Button
+              label="Supprimer"
+              bgprimary="bg-red-600"
+              onClick={deleteUser}
+              height="h-10"
+            />
+
+            <Button
+              label="Annuler"
+              bgprimary="bg-green-600"
+              onClick={closeModalDelete}
+              height="h-10"
+            />
+          </div>
         </Modal>
       </div>
     </div>

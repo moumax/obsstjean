@@ -51,7 +51,7 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[] Enpêcher le scroll sur l'arrière plan lorsqu'une modale est ouverte.
 
--[] Dans la modale création Event, augmenter la hauteur de la descrition et faire en sorte qu'il y ai un retour à la ligne.
+-[x] Dans la modale création Event, augmenter la hauteur de la descrition et faire en sorte qu'il y ai un retour à la ligne.
 
 -[] Lors de la modification d'un event, le userId doit correspondre au user connecté qui modifie l'event
 
@@ -61,5 +61,5 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[x] Sur les events, si la date est passé, mettre l'evènement à la fin de la liste
 
--[] Modal pour valider la suppression d'un event et d'un user
+-[x] Modal pour valider la suppression d'un event et d'un user
 
