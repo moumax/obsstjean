@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 /* eslint-disable import/no-unresolved */
 import About from "@components/about/about";
+import Weather from "@components/weather/Weather";
 import Footer from "@components/footer/footer";
 import Observatoire from "@components/observatoire/observatoire";
 import Contact from "@components/contact/contact";
@@ -79,6 +80,7 @@ export default function EnterPoint() {
       </header>
       <Observatoire />
       <About />
+      <Weather />
       <Events />
       <Contact />
       <Footer />

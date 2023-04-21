@@ -51,11 +51,15 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[] Enpêcher le scroll sur l'arrière plan lorsqu'une modale est ouverte.
 
--[] Dans la modale création Event, augmenter la hauteur de la descrition et faire en sorte qu'il y ai un retour à la ligne.
+-[x] Dans la modale création Event, augmenter la hauteur de la descrition et faire en sorte qu'il y ai un retour à la ligne.
 
 -[] Lors de la modification d'un event, le userId doit correspondre au user connecté qui modifie l'event
 
 -[] Fix le bug de date avec un décallage d'une journée
 
--[] Sur les events, mettre un liseré vert ou rouge selon la date
+-[x] Sur les events, mettre un liseré vert ou rouge selon la date
+
+-[x] Sur les events, si la date est passé, mettre l'evènement à la fin de la liste
+
+-[x] Modal pour valider la suppression d'un event et d'un user
 

@@ -14,6 +14,7 @@ import Button from "../assets/Button";
 
 function CardEvent({ data }) {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false);
 
   const initialState = {
     title: data.title,
@@ -33,8 +34,16 @@ function CardEvent({ data }) {
   const openModalModify = () => {
     setIsOpen(true);
   };
+
+  const openModalDelete = () => {
+    setModalDeleteIsOpen(true);
+  };
   const closeModal = () => {
     setIsOpen(false);
+  };
+
+  const closeModalDelete = () => {
+    setModalDeleteIsOpen(false);
   };
 
   const modifyEvent = async (e) => {
@@ -98,9 +107,18 @@ function CardEvent({ data }) {
     });
   };
 
+  const now = new Date();
+  const nowIso = now.toISOString();
+
   return (
     <div className="w-96 flex flex-col items-center ">
-      <div className="w-[90vw] mb-5">
+      <div
+        className={`w-[90vw] mb-5 rounded-xl ${
+          data.date < nowIso
+            ? "border border-opacity-40 border-red-500"
+            : "border border-opacity-40 border-green-500"
+        }`}
+      >
         <div className="flex flex-col items-center bg-white/10 rounded-t-xl">
           <p className="text-white opacity-50 text-xs px-5 pt-3 self-start">
             <Moment locale="fr" format="LL">
@@ -129,7 +147,7 @@ function CardEvent({ data }) {
               </button>
               <button
                 type="submit"
-                onClick={() => deleteEvent()}
+                onClick={() => openModalDelete()}
                 className="w-[8vw]"
               >
                 <img src={eraseEvent} alt="Supprimer un évènement" />
@@ -226,6 +244,54 @@ function CardEvent({ data }) {
               label="Fermer"
               bgprimary="bg-red-500"
               onClick={closeModal}
+              height="h-10"
+            />
+          </div>
+        </Modal>
+        <Modal
+          isOpen={modalDeleteIsOpen}
+          onRequestClose={closeModalDelete}
+          contentLabel="Example Modal"
+          style={modalStyle}
+        >
+          <h2 className="text-center text-white text-2xl">
+            Supprimer cet évènement ?
+          </h2>
+          <div className="m-1 mt-5 flex flex-col">
+            <label htmlFor="title" className="font-bold text-slate-300">
+              Titre
+            </label>
+            <p className="text-white self-end">{eventForm.title}</p>
+
+            <label htmlFor="description" className="font-bold text-slate-300">
+              Description
+            </label>
+            <p className="text-white self-end text-justify">
+              {eventForm.description}
+            </p>
+
+            <label htmlFor="date" className="font-bold text-slate-300">
+              Date
+            </label>
+            <p className="text-white self-end">{eventForm.date.slice(0, 10)}</p>
+
+            <label htmlFor="site" className="font-bold text-slate-300">
+              Site
+            </label>
+            <p className="text-white self-end">{eventForm.site}</p>
+          </div>
+          <div className="flex flex-row absolute bottom-3 right-0 justify-between w-full px-4">
+            <Button
+              label="Supprimer"
+              bgprimary="bg-red-600"
+              onClick={deleteEvent}
+              height="h-10"
+            />
+
+            <Button
+              label="Annuler"
+              bgprimary="bg-green-600"
+              onClick={closeModalDelete}
               height="h-10"
             />
           </div>
