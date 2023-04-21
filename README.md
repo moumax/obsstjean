@@ -55,3 +55,5 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[] Lors de la modification d'un event, le userId doit correspondre au user connecté qui modifie l'event
 
+-[] Fix le bug de date avec un décallage d'une journée
+

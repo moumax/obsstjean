@@ -110,7 +110,7 @@ function CardEvent({ data }) {
           <h3 className="text-yellow-300 self-end px-5 pb-3">{data.title}</h3>
         </div>
         <div className="bg-white/5 px-5 rounded-b-xl shadow-xl">
-          <p className="text-white opacity-50 text-xs pt-2">
+          <p className="text-white opacity-50 text-xs pt-2 break-words">
             {data.description}
           </p>
           <div className="flex justify-between pt-10 pb-2">
@@ -154,7 +154,7 @@ function CardEvent({ data }) {
             <input
               id="title"
               type="text"
-              className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+              className="text-xs w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Titre"
               value={eventForm.title}
               onChange={(e) =>
@@ -169,10 +169,10 @@ function CardEvent({ data }) {
             <label htmlFor="description" className="font-bold text-slate-300">
               Description
             </label>
-            <input
+            <textarea
               id="description"
               type="text"
-              className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+              className="text-xs w-full h-40 py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Description"
               value={eventForm.description}
               onChange={(e) =>
@@ -190,7 +190,7 @@ function CardEvent({ data }) {
             <input
               id="date"
               type="date"
-              className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+              className="text-xs w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="date"
               value={eventForm.date.slice(0, 10)}
               onChange={dateFunction}
@@ -203,7 +203,7 @@ function CardEvent({ data }) {
             <input
               id="site"
               type="text"
-              className="w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+              className="text-xs w-full py-3 mt-1 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
               placeholder="Site"
               value={eventForm.site}
               onChange={(e) =>
@@ -214,7 +214,7 @@ function CardEvent({ data }) {
               }
             />
           </div>
-          <div className="flex flex-col mt-10 gap-5">
+          <div className="flex flex-col absolute bottom-0 right-0 items-center">
             <Button
               label="Sauvegarder"
               bgprimary="bg-green-600"
