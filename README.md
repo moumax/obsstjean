@@ -63,3 +63,9 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[x] Modal pour valider la suppression d'un event et d'un user
 
+- Installation de react icons
+
+-[] Gérer l'érreur si l'API météo ne réponds pas
+
+-[] Ajouter la météo du site
+
