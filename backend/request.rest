@@ -1,0 +1,66 @@
+GET http://localhost:5000/api/events
+
+###
+GET http://localhost:5000/api/events/11
+
+###
+POST http://localhost:5000/api/events
+Content-Type: application/json
+
+{
+    "title" : "Nuit des étoiles6",
+    "description" : "C'est enfin la nuit des étoiles et nous avions hâte !",
+    "date" : "2020-05-12T23:50:21.817Z",
+    "site" : "Observatoire de Saint Jean Le Blanc",
+    "userId": 1
+}
+
+###
+PUT http://localhost:5000/api/events/12
+Content-Type: application/json
+
+{
+    "title" : "Nuit des étoiles filantes",
+    "description" : "C'est enfin la nuit des étoiles et nous avions hâte !",
+    "date" : "2020-05-12T23:50:21.817Z",
+    "site" : "Observatoire de Saint Jean Le Blanc",
+    "userId": 1
+}
+
+###
+DELETE http://localhost:5000/api/events/9
+
+
+
+
+###
+GET http://localhost:5000/api/users
+
+###
+GET http://localhost:5000/api/users/1
+
+###
+POST http://localhost:5000/api/users
+Content-Type: application/json
+
+{
+    "email" : "totololoxwcwxcwxc@gmail.com",
+    "password_hash" : "dsfdsfdsfsdfsdf"
+}
+
+###
+PUT http://localhost:5000/api/users/8
+Content-Type: application/json
+
+{
+    "email" : "totolololilol@gmail.com",
+    "password_hash" : "motdepasse2"
+}
+
+###
+DELETE http://localhost:5000/api/users/1
+
+// Attention, la suppression du user1 est impossible car il a des events en cours.
+
+###
+POST http://localhost:5000/api/login

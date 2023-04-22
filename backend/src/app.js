@@ -1,38 +1,38 @@
-// import some node modules for later
-
-const fs = require("node:fs");
-const path = require("node:path");
-
-// create express app
-
 const express = require("express");
+const path = require("node:path");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const fs = require("node:fs");
+// const auth = require("./middlewares/auth");
+require("dotenv").config();
 
 const app = express();
 
-// use some application-level middlewares
-
-app.use(express.json());
-
-const cors = require("cors");
-
+app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
+    origin: process.env.FRONTEND_URL ?? "http://localhost:3001",
+    credentials: true,
     optionsSuccessStatus: 200,
   })
 );
 
-// import and mount the API routes
-
-const router = require("./router");
-
-app.use(router);
-
-// serve the `backend/public` folder for public resources
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "../public")));
 
 // serve REACT APP
+const router = express.Router();
+const authRouter = require("./routes/authRouter");
+const eventsRouter = require("./routes/eventsRouter");
+const usersRouter = require("./routes/usersRouter");
+
+router.use("/auth", authRouter);
+router.use("/events", eventsRouter);
+router.use("/users", usersRouter);
+
+// API routes
+app.use("/api", router);
 
 const reactIndexFile = path.join(
   __dirname,
@@ -54,7 +54,5 @@ if (fs.existsSync(reactIndexFile)) {
     res.sendFile(reactIndexFile);
   });
 }
-
-// ready to export
 
 module.exports = app;
