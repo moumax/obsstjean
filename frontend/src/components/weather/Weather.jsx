@@ -80,7 +80,8 @@ export default function Weather() {
 
   const conditionPicture = () => {
     switch (condition) {
-      case "Sunny" || "Clear":
+      case "Sunny":
+      case "Clear":
         return <BsSun className="w-8 h-8" />;
       case "Partly cloudy":
         return <BsCloudSun className="w-8 h-8" />;
@@ -89,35 +90,35 @@ export default function Weather() {
         return <AiOutlineCloud className="w-8 h-8" />;
       case "Mist":
         return <RiMistFill className="w-8 h-8" />;
-      case "Patchy rain possible" ||
-        "Patchy light rain" ||
-        "Light rain" ||
-        "Moderate rain at times" ||
-        "Moderate rain" ||
-        "Heavy rain at times" ||
-        "Heavy rain" ||
-        "Light freezing rain" ||
-        "Moderate or heavy freezing rain" ||
-        "Light sleet" ||
-        "Moderate or heavy sleet" ||
-        "Light rain shower" ||
-        "Moderate or heavy rain shower" ||
-        "Torrential rain shower" ||
-        "Light sleet showers" ||
-        "Moderate or heavy sleet showers":
+      case "Patchy rain possible":
+      case "Patchy light rain":
+      case "Light rain":
+      case "Moderate rain at times":
+      case "Moderate rain":
+      case "Heavy rain at times":
+      case "Heavy rain":
+      case "Light freezing rain":
+      case "Moderate or heavy freezing rain":
+      case "Light sleet":
+      case "Moderate or heavy sleet":
+      case "Light rain shower":
+      case "Moderate or heavy rain shower":
+      case "Torrential rain shower":
+      case "Light sleet showers":
+      case "Moderate or heavy sleet showers":
         return <FaCloudSunRain className="w-8 h-8" />;
-      case "Patchy snow possible" ||
-        "Patchy light snow" ||
-        "Light snow" ||
-        "Patchy moderate snow" ||
-        "Moderate snow" ||
-        "Patchy heavy snow" ||
-        "Heavy snow" ||
-        "Ice pellets" ||
-        "Light snow showers" ||
-        "Moderate or heavy snow showers" ||
-        "Light showers of ice pellets" ||
-        "Moderate or heavy showers of ice pellets":
+      case "Patchy snow possible":
+      case "Patchy light snow":
+      case "Light snow":
+      case "Patchy moderate snow":
+      case "Moderate snow":
+      case "Patchy heavy snow":
+      case "Heavy snow":
+      case "Ice pellets":
+      case "Light snow showers":
+      case "Moderate or heavy snow showers":
+      case "Light showers of ice pellets":
+      case "Moderate or heavy showers of ice pellets":
         return <WiDaySnow className="w-8 h-8" />;
       case "Patchy sleet possible":
         return <WiDaySnow className="w-8 h-8" />;
@@ -129,17 +130,20 @@ export default function Weather() {
         return <BsCloudSnow className="w-8 h-8" />;
       case "Blizzard":
         return <RiCloudWindyLine className="w-8 h-8" />;
-      case "Fog" || "Freezing fog":
+      case "Fog":
+      case "Freezing fog":
         return <BsCloudFog className="w-8 h-8" />;
-      case "Patchy light drizzle" || "Light drizzle":
+      case "Patchy light drizzle":
+      case "Light drizzle":
         return <BsCloudRain className="w-8 h-8" />;
-      case "Freezing drizzle" || "Heavy freezing drizzle":
+      case "Freezing drizzle":
+      case "Heavy freezing drizzle":
         return <BiCloudRain className="w-8 h-8" />;
-      case "Patchy light rain with thunder" ||
-        "Moderate or heavy rain with thunder":
+      case "Patchy light rain with thunder":
+      case "Moderate or heavy rain with thunder":
         return <IoThunderstormOutline />;
-      case "Patchy light snow with thunder" ||
-        "Moderate or heavy snow with thunder":
+      case "Patchy light snow with thunder":
+      case "Moderate or heavy snow with thunder":
         return <WiDaySnowThunderstorm />;
       default:
         return <BsSun className="w-8 h-8" />;
