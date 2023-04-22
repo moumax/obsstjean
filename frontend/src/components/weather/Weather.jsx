@@ -13,6 +13,7 @@ import {
 } from "react-icons/bs";
 import {
   WiDaySnow,
+  WiDaySnowThunderstorm,
   WiDayThunderstorm,
   WiHumidity,
   WiMoonAltFirstQuarter,
@@ -31,6 +32,7 @@ import { FaCloudSunRain, FaTemperatureLow } from "react-icons/fa";
 import { AiOutlineCloud } from "react-icons/ai";
 import { RiCloudWindyLine, RiMistFill } from "react-icons/ri";
 import { BiCloudRain } from "react-icons/bi";
+import { IoThunderstormOutline } from "react-icons/io";
 
 export default function Weather() {
   const [sunrise, setSunrise] = useState();
@@ -45,6 +47,7 @@ export default function Weather() {
   const [wind, setWind] = useState();
   const [windDirection, setWindDirection] = useState();
   const [condition, setCondition] = useState();
+  // eslint-disable-next-line no-unused-vars
   const [conditionIcon, setConditionIcon] = useState();
 
   const baseURLastro =
@@ -71,45 +74,75 @@ export default function Weather() {
       setWind(response.data.current.wind_kph);
       setWindDirection(response.data.current.wind_dir);
       setCondition(response.data.current.condition.text);
-      setConditionIcon(response.date.current.condition.icon);
+      setConditionIcon(response.data.current.condition.icon);
     });
   }, []);
 
   const conditionPicture = () => {
-    switch (conditionIcon) {
+    switch (condition) {
       case "Sunny" || "Clear":
-        return <BsSun />;
+        return <BsSun className="w-8 h-8" />;
       case "Partly cloudy":
-        return <BsCloudSun />;
-      case "Cloudy" || "Overcast":
-        return <AiOutlineCloud />;
+        return <BsCloudSun className="w-8 h-8" />;
+      case "Cloudy":
+      case "Overcast":
+        return <AiOutlineCloud className="w-8 h-8" />;
       case "Mist":
-        return <RiMistFill />;
+        return <RiMistFill className="w-8 h-8" />;
       case "Patchy rain possible" ||
         "Patchy light rain" ||
         "Light rain" ||
-        "Moderate rain at times":
-        return <FaCloudSunRain />;
-      case "Patchy snow possible":
-        return <WiDaySnow />;
+        "Moderate rain at times" ||
+        "Moderate rain" ||
+        "Heavy rain at times" ||
+        "Heavy rain" ||
+        "Light freezing rain" ||
+        "Moderate or heavy freezing rain" ||
+        "Light sleet" ||
+        "Moderate or heavy sleet" ||
+        "Light rain shower" ||
+        "Moderate or heavy rain shower" ||
+        "Torrential rain shower" ||
+        "Light sleet showers" ||
+        "Moderate or heavy sleet showers":
+        return <FaCloudSunRain className="w-8 h-8" />;
+      case "Patchy snow possible" ||
+        "Patchy light snow" ||
+        "Light snow" ||
+        "Patchy moderate snow" ||
+        "Moderate snow" ||
+        "Patchy heavy snow" ||
+        "Heavy snow" ||
+        "Ice pellets" ||
+        "Light snow showers" ||
+        "Moderate or heavy snow showers" ||
+        "Light showers of ice pellets" ||
+        "Moderate or heavy showers of ice pellets":
+        return <WiDaySnow className="w-8 h-8" />;
       case "Patchy sleet possible":
-        return <WiDaySnow />;
+        return <WiDaySnow className="w-8 h-8" />;
       case "Patchy freezing drizzle possible":
-        return <BsThermometerSnow />;
+        return <BsThermometerSnow className="w-8 h-8" />;
       case "Thundery outbreaks possible":
-        return <WiDayThunderstorm />;
+        return <WiDayThunderstorm className="w-8 h-8" />;
       case "Blowing snow":
-        return <BsCloudSnow />;
+        return <BsCloudSnow className="w-8 h-8" />;
       case "Blizzard":
-        return <RiCloudWindyLine />;
+        return <RiCloudWindyLine className="w-8 h-8" />;
       case "Fog" || "Freezing fog":
-        return <BsCloudFog />;
+        return <BsCloudFog className="w-8 h-8" />;
       case "Patchy light drizzle" || "Light drizzle":
-        return <BsCloudRain />;
+        return <BsCloudRain className="w-8 h-8" />;
       case "Freezing drizzle" || "Heavy freezing drizzle":
-        return <BiCloudRain />;
+        return <BiCloudRain className="w-8 h-8" />;
+      case "Patchy light rain with thunder" ||
+        "Moderate or heavy rain with thunder":
+        return <IoThunderstormOutline />;
+      case "Patchy light snow with thunder" ||
+        "Moderate or heavy snow with thunder":
+        return <WiDaySnowThunderstorm />;
       default:
-        return <BsSun />;
+        return <BsSun className="w-8 h-8" />;
     }
   };
 
@@ -171,8 +204,10 @@ export default function Weather() {
           {windDirection}
         </div>
       </div>
-      <div>{conditionPicture()}</div>
-      <div>{condition}</div>
+      <div className="flex items-center gap-3 text-xs">
+        <div className="text-white">Météo actuelle :</div>
+        <div className="text-white">{conditionPicture()}</div>
+      </div>
     </>
   );
 }
