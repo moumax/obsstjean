@@ -78,9 +78,9 @@ export default function EnterPoint() {
           />
         </div>
       </header>
+      <Weather />
       <Observatoire />
       <About />
-      <Weather />
       <Events />
       <Contact />
       <Footer />
