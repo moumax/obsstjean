@@ -50,6 +50,20 @@ export default function Weather() {
   // eslint-disable-next-line no-unused-vars
   const [conditionIcon, setConditionIcon] = useState();
 
+  function convertTimeTo24(time) {
+    const [timeStr, period] = time.split(" ");
+
+    // eslint-disable-next-line prefer-const
+    let [hours, minutes] = timeStr.split(":");
+
+    if (period === "PM" && hours !== "12") {
+      hours = parseInt(hours, 10) + 12;
+    } else if (period === "AM" && hours === "12") {
+      hours = "00";
+    }
+    return `${hours}:${minutes}`;
+  }
+
   const baseURLastro =
     "http://api.weatherapi.com/v1/astronomy.json?key=48015afa1f274a1d95a100916232104&q=Saint jean le blanc&lang=fr";
 
@@ -58,10 +72,10 @@ export default function Weather() {
 
   useEffect(() => {
     axios.get(baseURLastro).then((response) => {
-      setSunrise(response.data.astronomy.astro.sunrise);
-      setSunset(response.data.astronomy.astro.sunset);
-      setMoonrise(response.data.astronomy.astro.moonrise);
-      setMoonset(response.data.astronomy.astro.moonset);
+      setSunrise(convertTimeTo24(response.data.astronomy.astro.sunrise));
+      setSunset(convertTimeTo24(response.data.astronomy.astro.sunset));
+      setMoonrise(convertTimeTo24(response.data.astronomy.astro.moonrise));
+      setMoonset(convertTimeTo24(response.data.astronomy.astro.moonset));
       setMoonPhase(response.data.astronomy.astro.moon_phase);
       setIllumination(response.data.astronomy.astro.moon_illumination);
     });
@@ -171,46 +185,65 @@ export default function Weather() {
     }
   };
 
+  function temperatureIconColor() {
+    if (temperature > "28") {
+      return "text-red-400 w-7 h-8";
+    }
+    if (temperature < "28" && temperature >= "20") {
+      return "text-yellow-400 w-8 h-8";
+    }
+    return "text-blue-400 w-7 h-8";
+  }
+
   return (
     <>
-      <div className="flex mt-10 text-xs">
-        <div className="flex flex-col">
-          <div className="text-white flex items-center gap-3">
-            <BsSunrise className="text-yellow-400 w-8 h-8" />
-            {`${sunrise}`}
+      <div className="opacity-50 flex text-xs">
+        <div className="text-white flex items-center gap-4">
+          {conditionPicture()}
+          <div className="flex flex-col items-center">
+            <FaTemperatureLow className={temperatureIconColor()} />
+            {`${temperature} °C`}
           </div>
-          <div className="text-white flex items-center gap-3">
-            <BsSunset className="text-yellow-700 w-8 h-8" /> {`${sunset}`}
+
+          <div className="flex flex-col items-center">
+            <WiHumidity className="w-8 h-8 text-cyan-500" />
+            {`${humidity} %`}
+          </div>
+          <div className="flex flex-col items-center">
+            <BsWind className="text-white w-8 h-8" />
+            {`${wind} km/h`}
+          </div>
+          <div className="flex flex-col items-center">
+            <WiWindDeg className="text-blue-700 w-8 h-8" />
+            {windDirection}
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="text-white">{lunarIcon()}</div>
+            <div className="text-white">{`${illumination} %`}</div>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="text-white flex items-center gap-3">
-            <WiMoonrise className="text-gray-400 w-8 h-8" /> {`${moonrise}`}
+      </div>
+      <div className="flex mt-2 text-xs opacity-50 gap-4">
+        <div className="flex">
+          <div className="text-white flex items-center mr-3">
+            <BsSunrise className="text-yellow-400 w-8 h-8 mr-2" />
+            {sunrise}
           </div>
-          <div className="text-white flex items-center gap-3">
-            <WiMoonset className="text-gray-500 w-8 h-8" /> {`${moonset}`}
+          <div className="text-white flex items-center">
+            <BsSunset className="text-yellow-700 w-8 h-8 mr-2" />
+            {sunset}
           </div>
         </div>
-      </div>
-      <div className="flex items-center text-xs gap-3">
-        <div className="text-white">{lunarIcon()}</div>
-        <div className="text-white">{`Phase lunaire ${illumination} %`}</div>
-      </div>
-      <div className="flex text-xs">
-        <div className="text-white flex items-center gap-2">
-          <FaTemperatureLow className="text-red-400 w-8 h-8" />
-          {`${temperature} °C`}
-          <WiHumidity className="w-8 h-8 text-cyan-500" />
-          {`${humidity} %`}
-          <BsWind className="text-white w-8 h-8" />
-          {`${wind} km/h`}
-          <WiWindDeg className="text-blue-700 w-8 h-8" />
-          {windDirection}
+        <div className="flex">
+          <div className="text-white flex items-center mr-3">
+            <WiMoonrise className="text-gray-400 w-8 h-8" />
+            {moonrise}
+          </div>
+          <div className="text-white flex items-center">
+            <WiMoonset className="text-gray-500 w-8 h-8" />
+            {moonset}
+          </div>
         </div>
-      </div>
-      <div className="flex items-center gap-3 text-xs">
-        <div className="text-white">Météo actuelle :</div>
-        <div className="text-white">{conditionPicture()}</div>
       </div>
     </>
   );

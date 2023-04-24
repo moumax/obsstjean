@@ -3,7 +3,7 @@ import EnterPointImage from "../../assets/enter_point/enter_point.jpg";
 
 export default function Header() {
   return (
-    <header className="w-[90vw] mt-10 flex flex-col items-center">
+    <header className="w-[90vw] flex flex-col items-center">
       <div className="flex flex-col items-center mt-10 text-center">
         <img
           className="w-[50vw]"
