@@ -1,10 +1,10 @@
 /* eslint-disable import/no-unresolved */
-import About from "@components/about/about";
+import About from "@components/about/About";
 import Weather from "@components/weather/Weather";
-import Footer from "@components/footer/footer";
-import Observatoire from "@components/observatoire/observatoire";
-import Contact from "@components/contact/contact";
-import Events from "@components/enterPoint/events";
+import Footer from "@components/footer/Footer";
+import Observatoire from "@components/observatoire/Observatoire";
+import Contact from "@components/contact/Contact";
+import Events from "@components/enterPoint/Events";
 import Header from "@components/header/Header";
 
 export default function EnterPoint() {

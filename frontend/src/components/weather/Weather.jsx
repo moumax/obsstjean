@@ -197,7 +197,7 @@ export default function Weather() {
 
   return (
     <>
-      <div className="opacity-50 flex text-xs">
+      <section className="opacity-50 flex text-xs">
         <div className="text-white flex items-center gap-4">
           {conditionPicture()}
           <div className="flex flex-col items-center">
@@ -222,8 +222,8 @@ export default function Weather() {
             <div className="text-white">{`${illumination} %`}</div>
           </div>
         </div>
-      </div>
-      <div className="flex mt-2 text-xs opacity-50 gap-4">
+      </section>
+      <section className="flex mt-2 text-xs opacity-50 gap-4">
         <div className="flex">
           <div className="text-white flex items-center mr-3">
             <BsSunrise className="text-yellow-400 w-8 h-8 mr-2" />
@@ -244,7 +244,7 @@ export default function Weather() {
             {moonset}
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }
