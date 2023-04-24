@@ -4,7 +4,7 @@ import Weather from "@components/weather/Weather";
 import Footer from "@components/footer/footer";
 import Observatoire from "@components/observatoire/observatoire";
 import Contact from "@components/contact/contact";
-import Events from "@components/enter_point/events";
+import Events from "@components/enterPoint/events";
 import Header from "@components/header/Header";
 
 export default function EnterPoint() {
