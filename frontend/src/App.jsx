@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Administration from "@pages/Administration/Administration";
-import EnterPoint from "@components/enter_point/enter_point";
+import EnterPoint from "@components/enterPoint/EnterPoint";
 import Login from "@pages/Administration/Login";
 import CurrentUserContext from "./contexts/userContext";
 

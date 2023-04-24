@@ -1,8 +1,5 @@
-/* eslint-disable import/no-absolute-path */
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
 import CardAbout from "./cardAbout";
-import datasAbout from "/src/datas/datasAbout.js";
+import datasAbout from "../../datas/datasAbout";
 
 export default function About() {
   return (
