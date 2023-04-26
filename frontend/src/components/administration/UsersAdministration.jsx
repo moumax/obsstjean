@@ -1,7 +1,8 @@
 import { useReducer, useState } from "react";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
+import { MoonLoader } from "react-spinners";
 import Button from "../assets/Button";
 import usersReducer from "../../reducers/usersReducer";
 import CardUser from "./CardUser";
@@ -11,7 +12,6 @@ import axiosAPI from "../../services/axiosAPI";
 Modal.setAppElement("#root");
 
 export default function UsersAdministration() {
-  const [user, setUser] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const initialState = {
@@ -22,6 +22,24 @@ export default function UsersAdministration() {
 
   const [userForm, userFormDispatch] = useReducer(usersReducer, initialState);
 
+  const getUsers = async () => {
+    const response = await axiosAPI.get("http://localhost:5000/api/users");
+    return response.data;
+  };
+
+  const { data } = useSWR("users", getUsers);
+  if (!data)
+    return (
+      <h2>
+        <MoonLoader
+          color="#36d7b7"
+          size={60}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </h2>
+    );
+
   const openModalAdd = () => {
     setIsOpen(true);
   };
@@ -29,14 +47,6 @@ export default function UsersAdministration() {
   const closeModal = () => {
     setIsOpen(false);
   };
-
-  const fetcherUser = async () => {
-    const response = await axiosAPI.get("http://localhost:5000/api/users");
-    setUser(response.data);
-    return response.data;
-  };
-  const { data, mutate } = useSWR("users", fetcherUser);
-  if (!data) return <h2>Loading...</h2>;
 
   const createUser = async (e) => {
     e.preventDefault();
@@ -174,9 +184,9 @@ export default function UsersAdministration() {
           />
         </div>
       </Modal>
-      {user.map((users) => (
-        <div key={users.id}>
-          <CardUser data={users} />
+      {data.map((user) => (
+        <div key={user.id}>
+          <CardUser data={user} />
         </div>
       ))}
     </section>
