@@ -67,5 +67,5 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[] Gérer l'érreur si l'API météo ne réponds pas
 
--[] Ajouter la météo du site
+-[x] Ajouter la météo du site
 

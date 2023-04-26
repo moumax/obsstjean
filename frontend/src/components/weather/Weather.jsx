@@ -50,6 +50,20 @@ export default function Weather() {
   // eslint-disable-next-line no-unused-vars
   const [conditionIcon, setConditionIcon] = useState();
 
+  function convertTimeTo24(time) {
+    const [timeStr, period] = time.split(" ");
+
+    // eslint-disable-next-line prefer-const
+    let [hours, minutes] = timeStr.split(":");
+
+    if (period === "PM" && hours !== "12") {
+      hours = parseInt(hours, 10) + 12;
+    } else if (period === "AM" && hours === "12") {
+      hours = "00";
+    }
+    return `${hours}:${minutes}`;
+  }
+
   const baseURLastro =
     "http://api.weatherapi.com/v1/astronomy.json?key=48015afa1f274a1d95a100916232104&q=Saint jean le blanc&lang=fr";
 
@@ -58,10 +72,10 @@ export default function Weather() {
 
   useEffect(() => {
     axios.get(baseURLastro).then((response) => {
-      setSunrise(response.data.astronomy.astro.sunrise);
-      setSunset(response.data.astronomy.astro.sunset);
-      setMoonrise(response.data.astronomy.astro.moonrise);
-      setMoonset(response.data.astronomy.astro.moonset);
+      setSunrise(convertTimeTo24(response.data.astronomy.astro.sunrise));
+      setSunset(convertTimeTo24(response.data.astronomy.astro.sunset));
+      setMoonrise(convertTimeTo24(response.data.astronomy.astro.moonrise));
+      setMoonset(convertTimeTo24(response.data.astronomy.astro.moonset));
       setMoonPhase(response.data.astronomy.astro.moon_phase);
       setIllumination(response.data.astronomy.astro.moon_illumination);
     });
@@ -80,7 +94,8 @@ export default function Weather() {
 
   const conditionPicture = () => {
     switch (condition) {
-      case "Sunny" || "Clear":
+      case "Sunny":
+      case "Clear":
         return <BsSun className="w-8 h-8" />;
       case "Partly cloudy":
         return <BsCloudSun className="w-8 h-8" />;
@@ -89,35 +104,35 @@ export default function Weather() {
         return <AiOutlineCloud className="w-8 h-8" />;
       case "Mist":
         return <RiMistFill className="w-8 h-8" />;
-      case "Patchy rain possible" ||
-        "Patchy light rain" ||
-        "Light rain" ||
-        "Moderate rain at times" ||
-        "Moderate rain" ||
-        "Heavy rain at times" ||
-        "Heavy rain" ||
-        "Light freezing rain" ||
-        "Moderate or heavy freezing rain" ||
-        "Light sleet" ||
-        "Moderate or heavy sleet" ||
-        "Light rain shower" ||
-        "Moderate or heavy rain shower" ||
-        "Torrential rain shower" ||
-        "Light sleet showers" ||
-        "Moderate or heavy sleet showers":
+      case "Patchy rain possible":
+      case "Patchy light rain":
+      case "Light rain":
+      case "Moderate rain at times":
+      case "Moderate rain":
+      case "Heavy rain at times":
+      case "Heavy rain":
+      case "Light freezing rain":
+      case "Moderate or heavy freezing rain":
+      case "Light sleet":
+      case "Moderate or heavy sleet":
+      case "Light rain shower":
+      case "Moderate or heavy rain shower":
+      case "Torrential rain shower":
+      case "Light sleet showers":
+      case "Moderate or heavy sleet showers":
         return <FaCloudSunRain className="w-8 h-8" />;
-      case "Patchy snow possible" ||
-        "Patchy light snow" ||
-        "Light snow" ||
-        "Patchy moderate snow" ||
-        "Moderate snow" ||
-        "Patchy heavy snow" ||
-        "Heavy snow" ||
-        "Ice pellets" ||
-        "Light snow showers" ||
-        "Moderate or heavy snow showers" ||
-        "Light showers of ice pellets" ||
-        "Moderate or heavy showers of ice pellets":
+      case "Patchy snow possible":
+      case "Patchy light snow":
+      case "Light snow":
+      case "Patchy moderate snow":
+      case "Moderate snow":
+      case "Patchy heavy snow":
+      case "Heavy snow":
+      case "Ice pellets":
+      case "Light snow showers":
+      case "Moderate or heavy snow showers":
+      case "Light showers of ice pellets":
+      case "Moderate or heavy showers of ice pellets":
         return <WiDaySnow className="w-8 h-8" />;
       case "Patchy sleet possible":
         return <WiDaySnow className="w-8 h-8" />;
@@ -129,17 +144,20 @@ export default function Weather() {
         return <BsCloudSnow className="w-8 h-8" />;
       case "Blizzard":
         return <RiCloudWindyLine className="w-8 h-8" />;
-      case "Fog" || "Freezing fog":
+      case "Fog":
+      case "Freezing fog":
         return <BsCloudFog className="w-8 h-8" />;
-      case "Patchy light drizzle" || "Light drizzle":
+      case "Patchy light drizzle":
+      case "Light drizzle":
         return <BsCloudRain className="w-8 h-8" />;
-      case "Freezing drizzle" || "Heavy freezing drizzle":
+      case "Freezing drizzle":
+      case "Heavy freezing drizzle":
         return <BiCloudRain className="w-8 h-8" />;
-      case "Patchy light rain with thunder" ||
-        "Moderate or heavy rain with thunder":
+      case "Patchy light rain with thunder":
+      case "Moderate or heavy rain with thunder":
         return <IoThunderstormOutline />;
-      case "Patchy light snow with thunder" ||
-        "Moderate or heavy snow with thunder":
+      case "Patchy light snow with thunder":
+      case "Moderate or heavy snow with thunder":
         return <WiDaySnowThunderstorm />;
       default:
         return <BsSun className="w-8 h-8" />;
@@ -167,47 +185,66 @@ export default function Weather() {
     }
   };
 
+  function temperatureIconColor() {
+    if (temperature > "28") {
+      return "text-red-400 w-7 h-8";
+    }
+    if (temperature < "28" && temperature >= "20") {
+      return "text-yellow-400 w-8 h-8";
+    }
+    return "text-blue-400 w-7 h-8";
+  }
+
   return (
     <>
-      <div className="flex mt-10 text-xs">
-        <div className="flex flex-col">
-          <div className="text-white flex items-center gap-3">
-            <BsSunrise className="text-yellow-400 w-8 h-8" />
-            {`${sunrise}`}
+      <section className="opacity-50 flex text-xs">
+        <div className="text-white flex items-center gap-4">
+          {conditionPicture()}
+          <div className="flex flex-col items-center">
+            <FaTemperatureLow className={temperatureIconColor()} />
+            {`${temperature} °C`}
           </div>
-          <div className="text-white flex items-center gap-3">
-            <BsSunset className="text-yellow-700 w-8 h-8" /> {`${sunset}`}
+
+          <div className="flex flex-col items-center">
+            <WiHumidity className="w-8 h-8 text-cyan-500" />
+            {`${humidity} %`}
+          </div>
+          <div className="flex flex-col items-center">
+            <BsWind className="text-white w-8 h-8" />
+            {`${wind} km/h`}
+          </div>
+          <div className="flex flex-col items-center">
+            <WiWindDeg className="text-blue-700 w-8 h-8" />
+            {windDirection}
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="text-white">{lunarIcon()}</div>
+            <div className="text-white">{`${illumination} %`}</div>
           </div>
         </div>
-        <div className="flex flex-col">
-          <div className="text-white flex items-center gap-3">
-            <WiMoonrise className="text-gray-400 w-8 h-8" /> {`${moonrise}`}
+      </section>
+      <section className="flex mt-2 text-xs opacity-50 gap-4">
+        <div className="flex">
+          <div className="text-white flex items-center mr-3">
+            <BsSunrise className="text-yellow-400 w-8 h-8 mr-2" />
+            {sunrise}
           </div>
-          <div className="text-white flex items-center gap-3">
-            <WiMoonset className="text-gray-500 w-8 h-8" /> {`${moonset}`}
+          <div className="text-white flex items-center">
+            <BsSunset className="text-yellow-700 w-8 h-8 mr-2" />
+            {sunset}
           </div>
         </div>
-      </div>
-      <div className="flex items-center text-xs gap-3">
-        <div className="text-white">{lunarIcon()}</div>
-        <div className="text-white">{`Phase lunaire ${illumination} %`}</div>
-      </div>
-      <div className="flex text-xs">
-        <div className="text-white flex items-center gap-2">
-          <FaTemperatureLow className="text-red-400 w-8 h-8" />
-          {`${temperature} °C`}
-          <WiHumidity className="w-8 h-8 text-cyan-500" />
-          {`${humidity} %`}
-          <BsWind className="text-white w-8 h-8" />
-          {`${wind} km/h`}
-          <WiWindDeg className="text-blue-700 w-8 h-8" />
-          {windDirection}
+        <div className="flex">
+          <div className="text-white flex items-center mr-3">
+            <WiMoonrise className="text-gray-400 w-8 h-8" />
+            {moonrise}
+          </div>
+          <div className="text-white flex items-center">
+            <WiMoonset className="text-gray-500 w-8 h-8" />
+            {moonset}
+          </div>
         </div>
-      </div>
-      <div className="flex items-center gap-3 text-xs">
-        <div className="text-white">Météo actuelle :</div>
-        <div className="text-white">{conditionPicture()}</div>
-      </div>
+      </section>
     </>
   );
 }

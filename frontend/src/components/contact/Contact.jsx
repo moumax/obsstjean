@@ -1,6 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import Leaflet from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { CiFacebook } from "react-icons/ci";
+import { SiMaildotru } from "react-icons/si";
 import "./Leaflet.css";
 // import "./contact.css";
 import iconUrl from "../../assets/contact/marker.webp";
@@ -34,11 +36,24 @@ export default function Contact() {
       </MapContainer>
 
       <div className="flex flex-col items-center">
-        <p className="font-exo2 text-white">Horaires d'ouverture :</p>
-        <p className="font-exo2  text-white">
-          Tous les Vendredis à partir de 21h
+        <p className="font-exo2  text-slate-400 text-center mt-2">
+          L'observatoire est ouvert tous les Vendredis à partir de 21h
         </p>
-        <p className="font-exo2  text-white">obsstjean AT gmail.com</p>
+        <div className="flex gap-10 justify-center w-full mt-2">
+          <div className="flex items-center gap-1">
+            <p className="font-exo2  text-slate-400">obsstjean</p>
+            <p className="font-exo2  text-slate-400">
+              <SiMaildotru />
+            </p>
+            <p className="font-exo2  text-slate-400">gmail.com</p>
+          </div>
+
+          <div className="mt-2">
+            <a href="https://www.google.fr" target="_blank" rel="noreferrer">
+              <CiFacebook className="text-slate-400 w-8 h-8" />
+            </a>
+          </div>
+        </div>
       </div>
     </section>
   );
