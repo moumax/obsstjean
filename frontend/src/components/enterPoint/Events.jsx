@@ -1,37 +1,37 @@
 // eslint-disable-next-line no-unused-vars
-import useSWR, { useSWRConfig } from "swr";
-import axiosAPI from "../../services/axiosAPI";
+import MoonLoader from "react-spinners/MoonLoader";
+import useSWR from "swr";
 import CardEvent from "../administration/CardEvent";
+import sortedByDate from "../../utils/date";
+import fetcher from "../../api/fetcher";
 
 export default function EventsList() {
-  const fetcher = async () => {
-    const response = await axiosAPI.get("http://localhost:5000/api/events");
-    const now = new Date();
-    const sortedEvents = response.data.sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      if (dateA < now && dateB < now) {
-        return dateA - dateB;
-      }
-      if (dateA < now) {
-        return 1;
-      }
-      if (dateB < now) {
-        return -1;
-      }
-      return dateA - dateB;
-    });
-    return sortedEvents;
-  };
-  const { data } = useSWR("events", fetcher);
-  if (!data) return <h2>Loading...</h2>;
+  const { data, error } = useSWR("http://localhost:5000/api/events", fetcher);
+
+  if (error)
+    return (
+      <div className="text-white">
+        Une erreur est survenue : {error.message}
+      </div>
+    );
+  if (!data)
+    return (
+      <div>
+        <MoonLoader
+          color="#36d7b7"
+          size={60}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+    );
 
   return (
     <section className="w-[90vw] mt-10 flex flex-col items-center">
       <h2 className="font-exo2 text-xl text-white pb-4">
         Calendrier des évènements
       </h2>
-      {data.map((event) => (
+      {sortedByDate(data).map((event) => (
         <div key={event.id}>
           <CardEvent data={event} />
         </div>
