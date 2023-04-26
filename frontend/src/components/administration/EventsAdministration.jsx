@@ -1,6 +1,6 @@
+import { MoonLoader } from "react-spinners";
 import { useState, useContext, useReducer } from "react";
-// eslint-disable-next-line no-unused-vars
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import Moment from "moment";
@@ -8,15 +8,13 @@ import eventsReducer from "../../reducers/eventsReducer";
 import CardEvent from "./CardEvent";
 import axiosAPI from "../../services/axiosAPI";
 import CurrentUserContext from "../../contexts/userContext";
-// import Button from "../assets/Button";
-
+import sortedByDate from "../../utils/date";
 import addEvent from "../../assets/administration/addEvent.svg";
 import Button from "../assets/Button";
 
 Modal.setAppElement("#root");
 
 export default function EventsAdministration() {
-  const [event, setEvent] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
   const { user } = useContext(CurrentUserContext);
   const [userId, setUserId] = useState(0);
@@ -33,29 +31,23 @@ export default function EventsAdministration() {
     initialState
   );
 
-  const fetcherEvent = async () => {
+  const getEvents = async () => {
     const response = await axiosAPI.get("http://localhost:5000/api/events");
-    const now = new Date();
-    const sortedEvents = response.data.sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      if (dateA < now && dateB < now) {
-        return dateA - dateB;
-      }
-      if (dateA < now) {
-        return 1;
-      }
-      if (dateB < now) {
-        return -1;
-      }
-      return dateA - dateB;
-    });
-    setEvent(sortedEvents);
-    return sortedEvents;
+    return sortedByDate(response.data);
   };
 
-  const { data, mutate } = useSWR("events", fetcherEvent);
-  if (!data) return <h2>Loading...</h2>;
+  const { data } = useSWR("events", getEvents);
+  if (!data)
+    return (
+      <h2>
+        <MoonLoader
+          color="#36d7b7"
+          size={60}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </h2>
+    );
 
   const currentUserId = async () => {
     const res = await axiosAPI.get("http://localhost:5000/api/users");
@@ -229,9 +221,9 @@ export default function EventsAdministration() {
         </div>
       </Modal>
 
-      {event.map((events) => (
-        <div key={events.id}>
-          <CardEvent data={events} />
+      {data.map((event) => (
+        <div key={event.id}>
+          <CardEvent data={event} />
         </div>
       ))}
     </section>
