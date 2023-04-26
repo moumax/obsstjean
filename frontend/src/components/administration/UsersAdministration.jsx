@@ -8,6 +8,7 @@ import usersReducer from "../../reducers/usersReducer";
 import CardUser from "./CardUser";
 import addUser from "../../assets/administration/addUser.svg";
 import axiosAPI from "../../services/axiosAPI";
+import fetcher from "../../api/fetcher";
 
 Modal.setAppElement("#root");
 
@@ -22,22 +23,19 @@ export default function UsersAdministration() {
 
   const [userForm, userFormDispatch] = useReducer(usersReducer, initialState);
 
-  const getUsers = async () => {
-    const response = await axiosAPI.get("http://localhost:5000/api/users");
-    return response.data;
-  };
+  const { data, error } = useSWR("http://localhost:5000/api/users", fetcher);
 
-  const { data } = useSWR("users", getUsers);
+  if (error) return <div>Une erreur est survenue : {error.message}</div>;
   if (!data)
     return (
-      <h2>
+      <div>
         <MoonLoader
           color="#36d7b7"
           size={60}
           aria-label="Loading Spinner"
           data-testid="loader"
         />
-      </h2>
+      </div>
     );
 
   const openModalAdd = () => {
@@ -59,7 +57,7 @@ export default function UsersAdministration() {
       mutate("users");
       closeModal();
       toast.success("Nouvel utilisateur crée avec succès");
-    } catch (error) {
+    } catch (err) {
       if (!userForm.email) {
         toast.error('Le champ "Email" est vide !');
       }

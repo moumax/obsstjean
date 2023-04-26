@@ -11,6 +11,7 @@ import CurrentUserContext from "../../contexts/userContext";
 import sortedByDate from "../../utils/date";
 import addEvent from "../../assets/administration/addEvent.svg";
 import Button from "../assets/Button";
+import fetcher from "../../api/fetcher";
 
 Modal.setAppElement("#root");
 
@@ -31,22 +32,24 @@ export default function EventsAdministration() {
     initialState
   );
 
-  const getEvents = async () => {
-    const response = await axiosAPI.get("http://localhost:5000/api/events");
-    return sortedByDate(response.data);
-  };
+  const { data, error } = useSWR("http://localhost:5000/api/events", fetcher);
 
-  const { data } = useSWR("events", getEvents);
+  if (error)
+    return (
+      <div className="text-white">
+        Une erreur est survenue : {error.message}
+      </div>
+    );
   if (!data)
     return (
-      <h2>
+      <div>
         <MoonLoader
           color="#36d7b7"
           size={60}
           aria-label="Loading Spinner"
           data-testid="loader"
         />
-      </h2>
+      </div>
     );
 
   const currentUserId = async () => {
@@ -79,7 +82,7 @@ export default function EventsAdministration() {
       closeModal();
       toast.success("Nouvel évènement crée avec succès");
       mutate("events");
-    } catch (error) {
+    } catch (err) {
       if (!eventForm.title) {
         toast.error('Le champ "Titre" est vide !');
       }
@@ -221,7 +224,7 @@ export default function EventsAdministration() {
         </div>
       </Modal>
 
-      {data.map((event) => (
+      {sortedByDate(data).map((event) => (
         <div key={event.id}>
           <CardEvent data={event} />
         </div>
