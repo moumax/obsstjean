@@ -3,11 +3,12 @@ import Modal from "react-modal";
 // import { toast } from "react-toastify";
 import useSWR, { mutate } from "swr";
 import { MoonLoader } from "react-spinners";
+import { toast } from "react-toastify";
 import Button from "../assets/Button";
 import usersReducer from "../../reducers/usersReducer";
 import CardUser from "./CardUser";
 import addUser from "../../assets/administration/addUser.svg";
-import axiosAPI from "../../services/axiosAPI";
+// import axiosAPI from "../../services/axiosAPI";
 import fetcher from "../../api/fetcher";
 
 Modal.setAppElement("#root");
@@ -25,7 +26,12 @@ export default function UsersAdministration() {
 
   const { data, error } = useSWR("http://localhost:5000/api/users", fetcher);
 
-  if (error) return <div>Une erreur est survenue : {error.message}</div>;
+  if (error)
+    return (
+      <div className="text-white">
+        Une erreur est survenue : {error.message}
+      </div>
+    );
   if (!data)
     return (
       <div>
@@ -46,25 +52,31 @@ export default function UsersAdministration() {
     setIsOpen(false);
   };
 
-  async function createUser(user) {
-    const response = await axiosAPI.post(
-      "http://localhost:5000/api/users",
-      user
-    );
-    return response.data;
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    createUser({
-      email: userForm.email,
-      password_hash: userForm.password,
-      role: userForm.role,
-    }).then(() => {
-      closeModal();
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    try {
+      await fetcher("http://localhost:5000/api/users", "POST", {
+        email: userForm.email,
+        password_hash: userForm.password,
+        role: userForm.role,
+      });
       mutate("http://localhost:5000/api/users");
-    });
-  }
+      toast.success("Utilisateur crée avec succès");
+      closeModal();
+    } catch (err) {
+      if (!userForm.email) {
+        toast.error("Champs email vide");
+      }
+      if (!userForm.password) {
+        toast.error("Champs password vide");
+      }
+      if (!userForm.role) {
+        toast.error("Champs role vide");
+      } else {
+        toast.error("Erreur dans le formulaire");
+      }
+    }
+  };
 
   const modalStyle = {
     overlay: {
