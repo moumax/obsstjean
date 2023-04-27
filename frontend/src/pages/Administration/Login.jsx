@@ -25,7 +25,7 @@ export default function Login() {
         })
         .then((res) => {
           setUser(res.data);
-          localStorage.setItem("user", JSON.stringify(res.data));
+          localStorage.setItem("role", JSON.stringify(res.data.role));
           navigate("/");
           toast.success("Vous êtes connecté !");
         });
