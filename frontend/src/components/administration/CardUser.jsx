@@ -8,6 +8,7 @@ import axiosAPI from "../../services/axiosAPI";
 import editUser from "../../assets/administration/editUser.svg";
 import deleteUserSvg from "../../assets/administration/deleteUser.svg";
 import Button from "../assets/Button";
+import fetcher from "../../api/fetcher";
 
 function CardUser({ data }) {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -55,9 +56,14 @@ function CardUser({ data }) {
   };
 
   const deleteUser = async () => {
-    await axiosAPI.delete(`http://localhost:5000/api/users/${data.id}`);
-    mutate("users");
-    toast.success(`L'utilisateur ${data.email} a été supprimé`);
+    try {
+      await fetcher(`http://localhost:5000/api/users/${data.id}`, "DELETE");
+      mutate("http://localhost:5000/api/users");
+      closeModal();
+      toast.success(`L'utilisateur ${data.email} a été supprimé`);
+    } catch (err) {
+      toast.error("Impossible de supprimer l'utilisateur");
+    }
   };
 
   const currentPage = window.location.pathname;
