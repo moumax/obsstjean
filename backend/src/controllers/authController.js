@@ -20,16 +20,17 @@ const login = async (req, res) => {
       verifyPassword(pass, passBdd).then((verification) => {
         if (verification) {
           const userAnswer = response;
-          delete userAnswer.id;
+          delete userAnswer.email;
           delete userAnswer.password_hash;
           const token = encodeJwt(userAnswer);
           res.cookie("token", token, {
             httpOnly: false,
             secure: false,
           });
-          res
-            .status(200)
-            .json({ email: userAnswer.email, role: userAnswer.role });
+          res.status(200).json({
+            email: userAnswer.email,
+            role: userAnswer.role,
+          });
         } else {
           res.status(401).send("Champs invalides");
         }

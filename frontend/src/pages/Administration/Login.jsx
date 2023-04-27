@@ -14,6 +14,10 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  // function refreshPage() {
+  //   window.location.reload(false);
+  // }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -27,6 +31,7 @@ export default function Login() {
           setUser(res.data);
           localStorage.setItem("role", JSON.stringify(res.data.role));
           navigate("/");
+          // refreshPage();
           toast.success("Vous êtes connecté !");
         });
     } else {

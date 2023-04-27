@@ -29,7 +29,7 @@ function CardEvent({ data }) {
   );
   // eslint-disable-next-line no-unused-vars
   const [userId, setUserId] = useState(data.userId);
-  const { user } = useContext(CurrentUserContext);
+  const { role } = useContext(CurrentUserContext);
   const { mutate } = useSWRConfig();
   const openModalModify = () => {
     setIsOpen(true);
@@ -135,7 +135,7 @@ function CardEvent({ data }) {
             <p className="text-white opacity-70 text-xs">A quel endroit ?</p>
             <p className="text-white opacity-70 text-xs">{data.site}</p>
           </div>
-          {user && currentPage !== "/" && (
+          {role && currentPage !== "/" && (
             <div className="flex gap-2 justify-end pt-4 pb-2">
               <button type="submit" onClick={() => openModalModify()}>
                 <img

@@ -1,20 +1,21 @@
-import { useReducer, useState } from "react";
+import { useContext, useReducer, useState } from "react";
 import Modal from "react-modal";
 // import { toast } from "react-toastify";
 import useSWR, { mutate } from "swr";
 import { MoonLoader } from "react-spinners";
 import { toast } from "react-toastify";
+import CurrentUserContext from "../../contexts/userContext";
 import Button from "../assets/Button";
 import usersReducer from "../../reducers/usersReducer";
 import CardUser from "./CardUser";
 import addUser from "../../assets/administration/addUser.svg";
-// import axiosAPI from "../../services/axiosAPI";
 import fetcher from "../../api/fetcher";
 
 Modal.setAppElement("#root");
 
 export default function UsersAdministration() {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const { user } = useContext(CurrentUserContext);
 
   const initialState = {
     email: "",
@@ -45,7 +46,7 @@ export default function UsersAdministration() {
     );
 
   const openModalAdd = () => {
-    setIsOpen(true);
+    if (user.role === "administrateur") setIsOpen(true);
   };
 
   const closeModal = () => {
@@ -192,11 +193,15 @@ export default function UsersAdministration() {
           </div>
         </form>
       </Modal>
-      {data.map((user) => (
-        <div key={user.id}>
-          <CardUser data={user} />
-        </div>
-      ))}
+      {user.role === "administrateur" ? (
+        data.map((utilisateur) => (
+          <div key={utilisateur.id}>
+            <CardUser data={utilisateur} />
+          </div>
+        ))
+      ) : (
+        <div>Pas le droit</div>
+      )}
     </section>
   );
 }

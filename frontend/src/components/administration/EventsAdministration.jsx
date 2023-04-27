@@ -18,6 +18,7 @@ Modal.setAppElement("#root");
 export default function EventsAdministration() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const { user } = useContext(CurrentUserContext);
+  // eslint-disable-next-line no-unused-vars
   const [userId, setUserId] = useState(0);
 
   const initialState = {
@@ -52,17 +53,10 @@ export default function EventsAdministration() {
       </div>
     );
 
-  const currentUserId = async () => {
-    const res = await axiosAPI.get("http://localhost:5000/api/users");
-    res.data.map((result) =>
-      result.email === user.email ? setUserId(result.id) : null
-    );
-    return res;
-  };
-
   const openModalAdd = () => {
-    currentUserId();
-    setIsOpen(true);
+    if (user.role === "administrateur" || user.role === "redacteur") {
+      setIsOpen(true);
+    }
   };
 
   const closeModal = () => {
@@ -223,12 +217,15 @@ export default function EventsAdministration() {
           />
         </div>
       </Modal>
-
-      {sortedByDate(data).map((event) => (
-        <div key={event.id}>
-          <CardEvent data={event} />
-        </div>
-      ))}
+      {user.role === "administrateur" || user.role === "redacteur" ? (
+        sortedByDate(data).map((event) => (
+          <div key={event.id}>
+            <CardEvent data={event} />
+          </div>
+        ))
+      ) : (
+        <div>Pas accès</div>
+      )}
     </section>
   );
 }
