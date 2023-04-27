@@ -3,8 +3,6 @@ import Modal from "react-modal";
 import { useSWRConfig } from "swr";
 import { toast } from "react-toastify";
 import usersReducer from "../../reducers/usersReducer";
-import axiosAPI from "../../services/axiosAPI";
-
 import editUser from "../../assets/administration/editUser.svg";
 import deleteUserSvg from "../../assets/administration/deleteUser.svg";
 import Button from "../assets/Button";
@@ -39,18 +37,18 @@ function CardUser({ data }) {
     setModalDeleteIsOpen(false);
   };
 
-  const modifyUser = async (e) => {
-    e.preventDefault();
+  const modifyUser = async (evt) => {
+    evt.preventDefault();
     try {
-      await axiosAPI.put(`http://localhost:5000/api/users/${data.id}`, {
+      await fetcher(`http://localhost:5000/api/users/${data.id}`, "PUT", {
         email: userForm.email,
         password_hash: userForm.password,
         role: userForm.role,
       });
-      mutate("users");
-      closeModal();
+      mutate("http://localhost:5000/api/users");
       toast.success("Utilisateur mis à jour avec succès");
-    } catch (error) {
+      closeModal();
+    } catch (err) {
       toast.error("Erreur dans le formulaire !!!");
     }
   };
