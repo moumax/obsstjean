@@ -9,11 +9,13 @@ Procedure d'intallation pour ce projet
 - Dans VSCode, installer les plugins **Prettier - Code formatter** et **ESLint** et les configurer
 - Cloner ce repo
 - Run command `npm install`
-- Pour installer le server backend, créer un fichier .env avec les informations de la base de données. Un template existe (.env.sample)
+- Pour installer le server backend, créer un fichier .env avec les informations de la base de données. Un template
+  existe (.env.sample)
 
 ### Initialisation de la base de données
 
 - Sur le terminal dans le dossier backend du projet :
+
 ```` bash
 npx prisma migrate dev --name init
 ````
@@ -36,7 +38,7 @@ npx prisma migrate dev --name init
 - _Prettier_ : Outil pour la qualité du code
 - _ Airbnb Standard_ : Permet d'avoir un standard pour la qualité du code
 - _Nodemon_ : Permet le rafraichissement du code Js sans avoir à redémarrer le serveur à chaque modification
-- _prima_: Outil de création de base de données 
+- _prima_: Outil de création de base de données
 
 ### Deployment
 
@@ -51,7 +53,8 @@ Pour le déploiement. Il fait aller sur "secrets" => app "actions" sur le repo g
 
 -[] Enpêcher le scroll sur l'arrière plan lorsqu'une modale est ouverte.
 
--[x] Dans la modale création Event, augmenter la hauteur de la descrition et faire en sorte qu'il y ai un retour à la ligne.
+-[x] Dans la modale création Event, augmenter la hauteur de la descrition et faire en sorte qu'il y ai un retour à la
+ ligne.
 
 -[] Lors de la modification d'un event, le userId doit correspondre au user connecté qui modifie l'event
 

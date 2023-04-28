@@ -20,6 +20,8 @@ export default function EventsAdministration() {
   const { user } = useContext(CurrentUserContext);
   const [userId, setUserId] = useState(0);
 
+  const role = JSON.parse(localStorage.getItem("role"));
+
   const initialState = {
     title: "",
     description: "",
@@ -224,11 +226,12 @@ export default function EventsAdministration() {
         </div>
       </Modal>
 
-      {sortedByDate(data).map((event) => (
-        <div key={event.id}>
-          <CardEvent data={event} />
-        </div>
-      ))}
+      {(role === "administrateur" || role === "redacteur") &&
+        sortedByDate(data).map((event) => (
+          <div key={event.id}>
+            <CardEvent data={event} />
+          </div>
+        ))}
     </section>
   );
 }
