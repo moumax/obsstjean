@@ -27,7 +27,9 @@ const login = async (req, res) => {
             httpOnly: false,
             secure: false,
           });
-          res.status(200).json({ email: userAnswer.email });
+          res
+            .status(200)
+            .json({ email: userAnswer.email, role: userAnswer.role });
         } else {
           res.status(401).send("Champs invalides");
         }

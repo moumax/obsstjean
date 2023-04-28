@@ -15,6 +15,8 @@ Modal.setAppElement("#root");
 export default function UsersAdministration() {
   const [modalIsOpen, setIsOpen] = useState(false);
 
+  const role = JSON.parse(localStorage.getItem("role"));
+
   const initialState = {
     email: "",
     password: "",
@@ -156,7 +158,8 @@ export default function UsersAdministration() {
                 })
               }
             >
-              <option value=""> </option>
+              {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+              <option value="" />
               <option value="administrateur">administrateur</option>
               <option value="redacteur">redacteur</option>
               <option value="photographe">photographe</option>
@@ -180,11 +183,12 @@ export default function UsersAdministration() {
           </div>
         </form>
       </Modal>
-      {data.map((user) => (
-        <div key={user.id}>
-          <CardUser data={user} />
-        </div>
-      ))}
+      {role === "administrateur" &&
+        data.map((user) => (
+          <div key={user.id}>
+            <CardUser data={user} />
+          </div>
+        ))}
     </section>
   );
 }
