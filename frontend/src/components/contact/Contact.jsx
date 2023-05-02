@@ -5,8 +5,8 @@ import { CiFacebook } from "react-icons/ci";
 import { SiMaildotru } from "react-icons/si";
 import "./Leaflet.css";
 // import "./contact.css";
-import iconUrl from "../../assets/contact/marker.webp";
 import Titles from "@components/utils/titles";
+import iconUrl from "../../assets/contact/marker.webp";
 
 export default function Contact() {
   const position = [47.891346, 1.917617];

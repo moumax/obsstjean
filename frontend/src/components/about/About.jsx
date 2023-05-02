@@ -1,6 +1,6 @@
+import Titles from "@components/utils/titles";
 import CardAbout from "./cardAbout";
 import datasAbout from "../../datas/datasAbout";
-import Titles from "@components/utils/titles";
 
 export default function About() {
   return (
