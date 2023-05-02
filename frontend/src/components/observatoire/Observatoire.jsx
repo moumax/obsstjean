@@ -1,4 +1,4 @@
-import Titles from "@components/utils/titles";
+import Titles from "../utils/Titles";
 
 export default function Observatoire() {
   return (

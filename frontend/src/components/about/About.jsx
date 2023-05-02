@@ -1,4 +1,4 @@
-import Titles from "@components/utils/titles";
+import Titles from "../utils/Titles";
 import CardAbout from "./cardAbout";
 import datasAbout from "../../datas/datasAbout";
 
