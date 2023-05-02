@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import MoonLoader from "react-spinners/MoonLoader";
 import useSWR from "swr";
+import Titles from "../utils/Titles";
 import CardEvent from "../administration/CardEvent";
 import sortedByDate from "../../utils/date";
 import fetcher from "../../api/fetcher";
@@ -28,9 +29,11 @@ export default function EventsList() {
 
   return (
     <section className="w-[90vw] mt-10 flex flex-col items-center">
-      <h2 className="font-exo2 text-xl text-white pb-4">
-        Calendrier des évènements
-      </h2>
+      <Titles
+        color="text-white"
+        size="text-2xl"
+        text="Calendrier des évènements"
+      />
       {sortedByDate(data).map((event) => (
         <div key={event.id}>
           <CardEvent data={event} />
