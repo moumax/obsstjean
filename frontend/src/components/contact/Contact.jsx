@@ -6,6 +6,7 @@ import { SiMaildotru } from "react-icons/si";
 import "./Leaflet.css";
 // import "./contact.css";
 import iconUrl from "../../assets/contact/marker.webp";
+import Titles from "@components/utils/titles";
 
 export default function Contact() {
   const position = [47.891346, 1.917617];
@@ -19,7 +20,7 @@ export default function Contact() {
 
   return (
     <section className="w-[90vw] mt-10 flex flex-col items-center">
-      <h2 className="font-exo2 text-xl text-white pb-4">Nous contacter</h2>
+      <Titles size="text-4xl" color="text-white" text="Nous contacter" />
       <MapContainer
         className="h-56 w-full overflow-hidden rounded-xl"
         center={position}
